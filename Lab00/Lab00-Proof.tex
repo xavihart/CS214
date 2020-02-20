@@ -1,0 +1,169 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab00-Proof}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Yiming Liu.}
+
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:Haotian Xue  \quad Student ID:518021910506 \quad Email: xavihart@sjtu.edu.cn}
+\end{center}
+
+\begin{enumerate}
+    \item
+    Prove that for any integer $n>2$, there is a prime $p$ satisfying $n<p<n!$. {\color{blue}(Hint: consider a prime factor $p$ of $n!-1$ and prove by contradiction)}
+    \begin{proof}
+        Assume there is no prime in range $(n, n!)$. Then for any number $x$ in $(n, n!)$, the prime factor of $x$ is no more than $n$, to be specific, the prime factor
+        of $x$ are all in $\{2, 3, 4, ..., n\}$. 
+        
+        However, for the number $n! - 1$, it is not divisible by any number in $\{2, 3, 4, ..., n\}$, 
+        which contradicts the assumption.
+
+
+        Therefore, there is a prime $p$ satisfying $n<p<n!$.
+    \end{proof}
+
+    \item
+    Use the minimal counterexample principle to prove that for any integer $n>17$, there exist integers $i_n\ge 0$ and $j_n\ge 0$, such that $n = i_n \times 4 + j_n \times 7$.
+    \begin{proof}
+      $P(n)$ : there exist integers $i_n\ge 0$ and $j_n\ge 0$, such that $n = i_n \times 4 + j_n \times 7$. 
+      
+      If $P(n)$ is not true for every $n > 17$, then there must be a smallest $k$, such that $P(k)$ is false.
+      
+      Since $18 = 4 \times 1 + 7 \times 2$, we have $k > 18$, $k - 1 > 17$.
+
+      Since $k$ is the smallest value to make $P(k)$ false, then $P(k - 1)$ is true: 
+      
+      \begin{equation*}
+          k - 1 = i_{k - 1} \times 4 + j_{k - 1} \times 7 
+      \end{equation*}
+      
+      If $k - 1 \equiv 0(mod 4)$, $j_{k - 1} = 0$, $i_{k - 1} \ge 5$ for $k > 17$, in this case:
+
+      \begin{equation*}
+        k = (i_{k - 1} - 5) \times 4 + 3 \times 7
+    \end{equation*}
+
+    $i_k = i_{k - 1} - 5 \ge 0$, $j_k = 3$ 
+    
+    If $k - 1$ can not be divided by $4$, then $j_{k - 1} >= 1$, in this case:
+
+    \begin{equation*}
+        k = (i_{k - 1} + 2) \times 4 + (j_{k - 1} - 1) \times 7 
+    \end{equation*}
+
+    $i_k = i_{k - 1} + 2 \ge 0$, $j_k = j_{k - 1} - 1 \ge 0$
+
+    So for both cases, $P(k)$ is true. We have derived a contradiction,
+    which allows us to conclude that our original assumption is false.
+
+
+      
+    \end{proof}
+
+    \item
+    Let $P=\{p_1, p_2, \cdots\}$ the set of all primes. Suppose that $\{p_i\}$ is monotonically    increasing, i.e., $p_1=2$, $p_2=3$, $p_3=5$, $\cdots$. Please prove: $p_n<2^{2^n}$. {\color{blue}(Hint: $p_i \nmid (1+\prod_{j=1}^n p_j), i=1,2,\cdots,n$.)}
+    \begin{proof}
+       We will use strong Mathematical Induction to solve the problem, we define $P(n)$: $p_n < 2^{2^{n}}$
+ 
+       \textbf{Basis step}: $p_1 = 2 < 4$.
+
+       \textbf{Induction hypothesis}: If $P(i)$ is true for $1 \le i < k$, then $P(k)$ is true$(k > 1)$.
+
+       \textbf{Proof ot induction step}: Since $p_k$ id the $k$th prime number, for any integer $x \in [p_{k - 1}, p_{k})$, the prime factors of $x$ are in 
+       ${p_1, p_2, ... , p_{k - 1}}$. Since number $\prod\limits_{i=1}^{k - 1}{p_{i}} + 1$ cannot be divided by any prime number in 
+       ${p_1, p_2, ... , p_{k - 1}}$, we can get:
+
+       \begin{equation*}
+           p_k \le \prod_{i=1}^{k - 1}{p_i} + 1
+       \end{equation*}
+
+       According the the induction hypothesis, $p_{i} < 2^{2^{i}}$ for $i=1, 2, ..., k - 1$. 
+       \begin{equation*}
+        p_k < \prod_{i=1}^{k - 1}{2^{2^{i}}} + 1 = 2^{2^{k - 2}} + 1 < 2^{2^{k}} (k > 1)
+       \end{equation*}
+
+       Therefore, the statement is true.
+   
+       
+
+
+
+    \end{proof}
+
+    \item
+    Prove that a plane divided by $n$ lines can be colored with only $2$ colors, and the adjacent regions have different colors.
+    \begin{proof}
+        We use Mathematical Induction to solve the problem.
+        
+        \textbf{Basis step}: When $n = 1$, we just paint the two section of plane different colors.
+        
+        \textbf{Induction hypothesis}: If the statement is true for $n = k$, it is true for $n = k + 1$.
+        
+        \textbf{Proof of induction step}: For $n = k + 1$, we just pick out one line, so the plane now is divided by
+        $k$ lines. According to the induction hypothesis, the plane can be coloured in only two colors and the adjacent
+        regions have different colors.
+
+        Then we add back the line we just picked out (name it $l$) and keep the colored unchanged. Considering the two side of $l$:
+        $R_1 = \{r^{1}_{1}, r^{1}_{2}, ..., r^{1}_{m}\}$, $R_2 = \{r^{2}_{1}, r^{2}_{2}, ..., r^{2}_{n}\}$, just reverse the color of regions
+        in $R_1$, it is obvious that this way of painting satisfies the requirement, because for any adjacent regions $r_1$ and $r_2$:
+
+        (1) If $r_1$ and $r_2$ are in the same side of $l$, their colors are different both after and before being reversed.
+
+        (2) If $r_1$ and $r_2$ are in different sides of $l$, we can get that $r_1$ and $r_2$ belong to the same region before line $l$ was added.
+        So the colors of $r_1$ and $r_2$ are different after the reversion operation.
+
+        Therefore the statement is true.
+    \end{proof}
+
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .pdf and .tex files in your uploaded .rar or .zip file.
+
+%========================================================================
+\end{document}
