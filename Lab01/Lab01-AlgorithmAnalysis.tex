@@ -1,0 +1,248 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab01-AlgorithmAnalysis}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Shuodian Yu.}
+
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:Haotian Xue  \quad Student ID: 518021910506 \quad Email: xavihart@sjtu.edu.cn}
+\end{center}
+
+\begin{enumerate}
+    \item
+    Please analyze the time complexity of Alg.~\ref{Alg-PSUM} with brief explanations.
+
+    \begin{minipage}[t]{0.8\textwidth}
+    \begin{algorithm}[H]
+        \caption{PSUM}\label{Alg-PSUM}
+        \KwIn{$n=k^2$, $k$ is a positive integer.}
+        \KwOut{$\sum_{i=1}^j i$ for each perfect square $j$ between 1 and $n$.}
+
+        \BlankLine
+
+        $k \leftarrow \sqrt{n}$\;
+
+        \For{$j\leftarrow 1$ {\bf to} $k$}{
+            $sum[j]\leftarrow 0$\;
+            \For{$i \leftarrow 1$ {\bf to} $j^2$}{
+                $sum[j]\leftarrow sum[j]+i$\;
+            }
+        }
+
+        {\bf return} $sum[1\cdots k]$\;
+    \end{algorithm}
+    \end{minipage}
+
+    \begin{solution}
+      In the first \textbf{for} loop will be executed for $k$ times, and for each $j$ in the \\
+ first loop, the inner loop will be executed for $j^2$ times, so
+      the iteration number  \\ 
+      should be:
+      \begin{equation*}
+         \sum_{j = 1}^{k}j^2 = \frac{k(k + 1)(2k + 1)}{6} = \frac{\sqrt{n}(\sqrt{n} + 1)(2\sqrt{n} + 1)}{6} 
+      \end{equation*}
+      
+      So the time complexity is $\Theta({n^{\frac{3}{2}}})$.
+
+   \end{solution}
+
+    \item
+    Analyze the \textbf{average} time complexity of QuickSort in Alg.~\ref{Alg_Quick}.
+
+    \begin{minipage}[t]{0.8\textwidth}
+    \begin{algorithm}[H]
+      \KwIn{An array $A[1,\cdots,n]$}
+      \KwOut{$A[1,\cdots,n]$ sorted nonincreasingly}
+
+      \BlankLine
+      \caption{QuickSort}\label{Alg_Quick}
+
+      %\If{$n \le 1$}{
+      %  \Return\;
+      %}
+
+      $pivot \leftarrow A[n]$; $i \leftarrow 1$\;
+      \For{$j \leftarrow 1$ \KwTo $n-1$}{
+        \If{$A[j] < pivot$}{
+          swap $A[i]$ and $A[j]$\;
+          $i \leftarrow i+1$\;
+        }
+      }
+
+      swap $A[i]$ and $A[n]$\;
+      \lIf{$i>1$}{$\operatorname{QuickSort}(A[1,\cdots,i-1])$}
+      \lIf{$i<n$}{$\operatorname{QuickSort}(A[i+1,\cdots,n])$}
+    \end{algorithm}
+    \end{minipage}
+
+   \begin{solution}
+           As we can see from the pseudocode, the QuickSort Algorithm are 
+           executed recursively: suppose we aim to sort a array with a length of n, 
+           firstly we pick up one element as pivot, sencondly we divide the array 
+           by the pivot, lastly we execute the recursion.
+
+           We define the average time complexity to sort a n-element array $T(n)$, which is composed of 
+           two parts: the dividing process and the recursion process.
+
+           \begin{equation*}
+               T(n) = T_{div}(n) + T_{rec}(n)
+           \end{equation*}
+           
+           As the dividing process is a \textbf{for} loop which has been executed for $n - 1$ times(if we only consider the swap operation). So
+           \begin{equation*}
+               T_{div}(n) = n 
+           \end{equation*}
+
+           To get $T_{rec}(n)$, we thik about the pivot $A[n]$, if there are $j$ ($j \in \{0, 1, 2, ..., n - 1\}$) elements which are 
+           smaller than $A[n]$, then the recursion part $T_{rec}(n)$ should be $T_{rec}(j) + T_{rec}(n - j - 1)$.
+
+           Suppose the probability $P(j = m) = \frac{1}{n} (m = 0, 1, ..., n - 1)$.
+
+           Then we can get:
+
+           \begin{equation*}
+               T(n) = n  + \sum_{j = 0}^{n - 1}{\frac{1}{n}(T(j) + T(n - j - 1))} 
+           \end{equation*}
+So we can get $T(n + 1)$:
+           \begin{align*}
+              nT(n) = n^2 + 2(T(0) + T(1) + ... T(n - 1)) \\
+                 (n + 1)T(n + 1) = (n + 1)^2 + 2(T(0) + T(1) + ... + T(n))
+            \end{align*}
+ After subtracting $T(n + 1)$ by $T(n)$ and dividing the both side of the equation by $(n + 2)(n + 1)$:
+       
+ \begin{equation*}
+         \frac{T(n + 1)}{n + 2} = \frac{T(n)}{n + 1} + \frac{2n + 1}{(n + 1)(n +2)}
+\end{equation*}
+         
+   \begin{equation*}
+      \frac{T(n)}{n + 1} = \sum_{j = 1}^{n - 1}{\frac{2(j)}{(j + 1)(j + 2)}} + T(1) 
+   \end{equation*}
+   
+   the right side is fitting into $O(ln(n))$ when $n$ is big enough.(easy to prove)
+   
+   So the average time complexity is $O(nlogn)$.
+
+    \end{solution}
+
+    \item
+    The BubbleSort mentioned in class can be improved by stopping in time if there are no swaps during an iteration. An indicator is used thereby to check whether the array is already sorted. Analyze the \textbf{average} and \textbf{best} time complexity of the improved BubbleSort in Alg.~\ref{Alg_Bubble}.
+
+    \begin{minipage}[t]{0.8\textwidth}
+    \begin{algorithm}[H]
+        \KwIn{An array $A[1,\dots,n]$}
+        \KwOut{$A[1,\dots,n]$ sorted nonincreasingly}
+
+        \BlankLine
+        \caption{BubbleSort}\label{Alg_Bubble}
+
+        $i\leftarrow 1$;$sorted\leftarrow false$\;
+
+        \While{$i\leq n-1$ \textbf{and not} $sorted$}{
+            $sorted\leftarrow true$\;
+            \For{$j\leftarrow n $ \textbf{downto} $i+1$}{
+                \If{$A[j]<A[j-1]$}{
+                    interchange $A[j]$ and $A[j-1]$\;
+                    $sorted\leftarrow false$\;
+                }
+            }
+            $i\leftarrow i+1$\;
+        }
+    \end{algorithm}
+    \end{minipage}
+
+    \begin{solution}
+   
+     It is obvious that the \textbf{best case} is $O(n)$: in the first loop of \textbf{while}, no interchange happened and the indicator is set to
+       true, so the program just break out of the loop.
+ 
+       To calculate the $average case$, we should take the indicator into consideration, the loop may break in the $ith$ iteration, where $i$ 
+       is in ${2, 3, ..., n - 1}(n > 2)$. We suppose the probability to be the same: $\frac{1}{n - 2}$. Then the average time complexity can 
+       be calculated as:
+
+       \begin{equation*}
+           T(n) = \frac{1}{n - 2}\sum_{j = 2}^{n - 1}\sum_{i = 1}^{j - 1}(n - i) = \frac{1}{n - 2}\sum_{j = 2}^{n - 1}\frac{(2n - 1)(j - 1) - (j - 1)^2}{2}
+       \end{equation*}
+       
+       \begin{equation*}
+        T(n) = \frac{\frac{1}{12}(n - 2)(n - 1)(2n + 1)}{n - 2} = \frac{1}{12}(n - 1)(2n + 1)
+    \end{equation*}
+        
+    So we can conclude that: $T(n) = O(n^2)$
+
+       
+
+    \end{solution}
+
+    \item
+
+    Rank the following functions by order of growth with brief explanations: that is, find an arrangement $g_1, g_2, \ldots , g_{15}$ of the functions $g_1 = \Omega(g_2), g_2 = \Omega(g_3), \ldots, g_{14} = \Omega(g_{15})$.  Partition your list into equivalence classes such that functions $f(n)$ and $g(n)$ are in the same class if and only if $f(n) = \Theta(g(n))$. Use symbols ``$=$'' and ``$\prec$'' to order these functions appropriately.
+    $$
+    \begin{array}{ccccc}
+        2^{\lg n} \quad & \quad (\lg n)^{\lg n} \quad & \quad n^2 \quad & \quad n! \quad & \quad (n + 1)! \\
+        2^n \quad & \quad n^3 \quad & \quad \lg^2 n \quad & \quad e^n \quad & \quad 2^{2^n} \\
+        \lg\lg n \quad & \quad n\cdot 2^n \quad & \quad n \quad & \quad \lg n \quad & \quad 4^{\lg n} \\
+    \end{array}
+    $$
+
+
+    \begin{solution}
+        \begin{align*}
+           \lg\lg{n} \prec \lg n \prec (\lg n)^2 \prec n = 2^{\lg n} \prec n^2 = 4^{\lg n} \prec n^3 \\
+            \prec \lg n^{\lg n} \prec 2^n \prec n2^n \prec e^n  \prec n! \prec (n + 1)! \prec 2^{2^n}
+        \end{align*}
+    
+        \end{solution}
+
+
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .pdf and .tex files in your uploaded .rar or .zip file.
+
+%========================================================================
+\end{document}
