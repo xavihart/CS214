@@ -137,7 +137,7 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
                T_{div}(n) = n 
            \end{equation*}
 
-           To get $T_{rec}(n)$, we thik about the pivot $A[n]$, if there are $j$ ($j \in \{0, 1, 2, ..., n - 1\}$) elements which are 
+           To get $T_{rec}(n)$, we think about the pivot $A[n]$, if there are $j$ ($j \in \{0, 1, 2, ..., n - 1\}$) elements which are 
            smaller than $A[n]$, then the recursion part $T_{rec}(n)$ should be $T_{rec}(j) + T_{rec}(n - j - 1)$.
 
            Suppose the probability $P(j = m) = \frac{1}{n} (m = 0, 1, ..., n - 1)$.
@@ -198,20 +198,80 @@ So we can get $T(n + 1)$:
    
      It is obvious that the \textbf{best case} is $O(n)$: in the first loop of \textbf{while}, no interchange happened and the indicator is set to
        true, so the program just break out of the loop.
- 
-       To calculate the $average case$, we should take the indicator into consideration, the loop may break in the $ith$ iteration, where $i$ 
-       is in ${2, 3, ..., n - 1}(n > 2)$. We suppose the probability to be the same: $\frac{1}{n - 2}$. Then the average time complexity can 
-       be calculated as:
 
-       \begin{equation*}
-           T(n) = \frac{1}{n - 2}\sum_{j = 2}^{n - 1}\sum_{i = 1}^{j - 1}(n - i) = \frac{1}{n - 2}\sum_{j = 2}^{n - 1}\frac{(2n - 1)(j - 1) - (j - 1)^2}{2}
-       \end{equation*}
-       
-       \begin{equation*}
-        T(n) = \frac{\frac{1}{12}(n - 2)(n - 1)(2n + 1)}{n - 2} = \frac{1}{12}(n - 1)(2n + 1)
+    To calculate the \textbf{Average Time Complexity}, firstly I will use a strict way to the get the actually swap times in the optimized BubbleSort.
+
+    First we define the inversion pair $<A_i, A_j>$ and the inversion pair numbers $N(A)$ in a array:
+
+    \begin{equation*}
+        InversionPair<A_i, A_j> \quad iff \quad (A_i > A_j) \land (i < j) \\
     \end{equation*}
-        
-    So we can conclude that: $T(n) = O(n^2)$
+
+    \begin{equation*}
+        N(A) = \bigg{|}\{<i, j> | InversionPair<A_i, A_j>\}\bigg{|}
+    \end{equation*}
+
+    If we regard the swap times in array $A$ is $T_s(n, A)$ and the compare times $T_c(n, A)$ in the process of algorithm, we can regard $T_c(n)$ as the deciding part because it is obvious that:
+
+    \begin{align*}
+        T_s(n, A) < T_c(n, A)
+    \end{align*}
+
+    Then let us make a accurate calculation of $T_s(n)$: the happening of each swap operation make the InversionPair number $N(A)$ subtract by $1$, so actually for 
+    every array $A[1, ..., n]$, the swapping times is equal to the number of inversion pairs, that is:
+   
+    \begin{equation*}
+        T_s(n, A) = N(A)
+    \end{equation*}
+
+    Without loss of generality, we make the assumption that the elements in $A$ is $1, 2,..., n$, and the probability of each of the $n!$ arranges$(A_1, A_2, ..., A_{n!})$ is the same.
+   
+    \begin{equation*}
+        P(A =A_i) = \frac{1}{n!} \quad (i=1, 2, ... n!)
+    \end{equation*}
+
+    So the time complexity for swap operations is $T_s(n)$:
+
+    \begin{equation*}
+        T_s(n) = \sum_{i = 1}^{n!}P(A=A_i)T_s(n, A_i) = \frac{1}{n!}\sum_{i = 1}^{n!}N(A_i) 
+    \end{equation*}
+
+    actually the sum equation can be view from another angle:
+
+    \begin{equation*}
+        \sum_{i = 1}^{n!}N(A_i) = \sum_{\substack{i, j \in \{1, 2, ..., n\}\\ i > j }}M(<i, j>) 
+    \end{equation*}
+    $M<i, j>$ is the number of pair $<i, j>$ appearing in the $n!$ arranges. So it is obvious that:
+    \begin{equation*}
+        M(<i, j>) = C_n^{2}(n-2)!=\frac{n!}{2}
+    \end{equation*}
+
+    \begin{equation*}
+        T_s(n) = \frac{1}{n!}  C_n^{2} M(<i, j>) = \frac{1}{n!}\cdot\frac{n!n(n - 1)}{2} = \frac{n(n - 1)}{2} = O(n^2)
+    \end{equation*}
+
+    Then worst case is $O(n^2)$, so the final Average Time Complexity $T(n)$can be calculated by:
+    \begin{equation*}
+            O(n^2) = T_s(n) \leq T(n) = T_c(n) \leq WorstCase = O(n^2)
+    \end{equation*}
+
+    So we get the Average Time Complexity $T(n) = O(n^2)$.
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+ 
 
        
 
@@ -234,6 +294,39 @@ So we can get $T(n + 1)$:
            \lg\lg{n} \prec \lg n \prec (\lg n)^2 \prec n = 2^{\lg n} \prec n^2 = 4^{\lg n} \prec n^3 \\
             \prec \lg n^{\lg n} \prec 2^n \prec n2^n \prec e^n  \prec n! \prec (n + 1)! \prec 2^{2^n}
         \end{align*}
+
+    \textbf{Explanations}: In this part I will give some explanations of the above answers which are not that obvious.
+    
+    1) \textbf{$n^3 \prec \lg{n} ^ {\lg{n}} \prec 2 ^n$} :
+    \begin{align*}
+        \lim_{n \to \infty}\lg \frac{\lg n^{\lg n}}{2^n} =  \lim_{n \to \infty}(\lg n \lg\lg n- n) = -\infty\\
+        \lim_{n \to \infty}\lg \frac{\lg n^{\lg n}}{n^3} =  \lim_{n \to \infty}\lg n(\lg\lg n - 3) = +\infty  
+    \end{align*}
+
+    2) \textbf{$(n + 1)! \prec 2^{2^n}$}:
+        
+      \qquad let $R(n) = \frac{(n + 1)!}{2^{2^n}}$, then calculate $\frac{R(n + 1)}{R(n)}$:
+       \begin{align*}
+        \frac{R(n + 1)}{R(n)} = \frac{n}{2} \to +\infty
+    \end{align*}
+
+    \qquad So $R(n) \to +\infty$.
+    
+    3) \textbf{$e^n \prec n!$} :
+
+        \qquad According the Stirling's approximation:
+        \begin{align*}
+            \lim_{\to +\infty} \frac{n!}{\sqrt{2\pi n}(\frac{n}{e})^n} = 1
+        \end{align*}
+        \qquad  so it is obvious that $n!$ much bigger than $2^n$ when $n$ is great enough.
+    
+
+
+
+
+
+
+        
     
         \end{solution}
 
