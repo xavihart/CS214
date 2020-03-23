@@ -1,0 +1,162 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab03-GreedyStrategy}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Shuodian Yu.}
+
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:Haotian Xue  \quad Student ID:518021910506 \quad Email: xavihart@sjtu.edu.cn}
+\end{center}
+
+\begin{enumerate}
+    \item
+    There are $n+1$ people, each with two attributes $(a_i,b_i), i\in[0,n] \text{ and } a_i>1$. The $i$-th person can get money worth $c_i = \frac{\prod_{j=0}^{i-1}{a_j}}{b_i}$. We do not want anyone to get too much. Thus, please design a strategy to sort people from $1$ to $n$, such that the maximum earned money $c_{max}=\max\limits_{1\leq i\leq n} c_i$ is minimized. (Note: the 0-th person doesn't enroll in the sorting process, but $a_0$ always works for each $c_i$.)
+    \begin{enumerate}
+        \item Please design an algorithm based on greedy strategy to solve the above problem. (Write a pseudocode)
+        \item Prove your algorithm is optimal.
+    \end{enumerate}
+
+    \section*{\normalsize{Solution}}
+        \begin{minipage}[t]{0.80\textwidth}
+       \begin{algorithm}[H]
+           \KwIn{The pair list $T = \{(a_0, b_0), (a_1, b_1), ..., (a_n, b_n)\}$}
+           \KwOut{$min$ $c_{max}$}
+           $min$ $=$ +$\infty$, $mul=1$
+           
+           Sort pair list $T$ by $a_i \times b_i$ in an increasing order.
+
+           \For{$i=1$ to $n$}{
+               $tmp$ = $\frac{mul}{b_i}$
+
+               \If{$tmp< min$}{
+                   $min = tmp $
+               }
+               $mul = mul \times a_i$
+           }
+           \Return{min}
+        \end{algorithm}
+        \end{minipage} 
+    
+    \begin{proof}
+       We can proof the greedy algorithm by contradiction.
+       
+       If the optimal answer doesn't satisfy the increasing order of $a_i \times b_i$, we think about the 
+       adjacent pair, normally $T_i, T_{i+1}$ for $i \in \{0, 1, ..., n-1\}$, where $T_i = (a_i, b_i)$ and $T_{i+1} = (a_{i+1}, b_{i+1})$.
+
+       Then in the optimal order, there exists an integer $i$, such that $a_i b_i > a_{i+1} b_{i+1}$. We note $\prod_{j=0}^{i-1}a_j = p$, then 
+       we can calculate the costs: $c_i = \frac{p}{b_i}$, $c_{i+1} = \frac{pa_i}{b_{i+1}}$. From $a_i > 1$ we can get:
+
+       \begin{equation*}
+           max\{c_i, c_{i+1}\} = max\{\frac{p}{b_i}, \frac{pa_{i}}{b_{i+1}}\} = \frac{p\times max\{a_i b_i, b_{i+1}\}}{b_i b_{i+1}}
+       \end{equation*}
+
+    If we reverse the order of $T_i$ and $T_{i+1}$, we can get(It is obvious that only $c_i$ and $c_{i+1}$ is changed):
+
+    \begin{equation*}
+        max\{c_i^{'}, c_{i+1}^{'}\} = max\{\frac{p}{b_{i+1}}, \frac{pa_{i+1}}{b_{i}}\} = \frac{p\times max\{a_{i+1} b_{i+1}, b_i\}}{b_i b_{i+1}}
+    \end{equation*}
+    
+    Since $a_i b_i > a_{i+1} b_{i+1} > b_{i+1}$ and $b_i < b_i a_i$, so:
+
+    \begin{equation*}
+       max\{a_{i+1}b_{i+1}, b_i\} < a_i b_i = max\{a_i b_i, b_{i+1}\}
+    \end{equation*}
+
+    Which is contradictory with the assumption. So we can conlcude that the optimal order will have the $T$ sorted with the methods in the algorithm.
+    \end{proof}
+
+
+    \item
+    \textbf{Interval Scheduling} is a classic problem solved by greedy algorithm and we have introduced it in the lecture: given $n$ jobs and the $j$-th job starts at $s_j$ and finishes at $f_j$. Two jobs are compatible if they do not overlap. The goal is to find maximum subset of mutually compatible jobs. Tim wants to solve it by sort the jobs in descending order of $s_j$. Is this attempt correct? Prove the correctness of such idea, or else provide a counter-example.
+
+    \begin{proof}
+      Tim's algorithm is right, we can proof it by assuming it is not optimal.
+      
+      We define the job sequence in Tim's algorithm $T = {T_1, T_2, ..., T_k}$, and the sequence of the optimal method is $R = {R_1, R_2, ..., R_o}$, and r is the largest number that $R_i = T_i, i \in \{1, 2, ..., r\}$ and $R_{r+1} \neq T_{r+1}$, where $T_i$ is a tuple with $T_i[0]$ is the start time and $T_i[1]$ the 
+      end time.
+      
+      Since in Tim's algorithm, $T_i[0] > T_j[0]$ for $i < j$. So we have $T_i[0] < R_i[0]$. If we replace $R_{r+1}$ with $T_{r+1}$ in the optimal result, it actually doesn't influence the rest arrangement 
+      $R_{r+2}, R_{r+3}, ..., R_o$. And this is contradictory with the definition of $r$. In that way, Tim got the right algorithm. m
+    \end{proof}
+
+    \item
+    There are $n$ lectures numbered from $1$ to $n$. Lecture $i$ has duration (course length) $t_i$ and will close on $d_i$-th day. That is, you could take lecture $i$ \textbf{continuously} for $t_i$ days and must finish before or on the $d_i$-th day. The goal is to find the maximal number of courses that can be taken. (Note: you will start learning at the $1$-st day.)
+    
+    Please design an algorithm based on greedy strategy to solve it. You could use the data structrue learned on Data Structrue course. You need to write pseudo code and prove its correctness.
+
+%    \begin{solution}
+%        Uncomment this block to write your proof.
+%    \end{solution}
+
+    \item
+    Let $S_1,S_2,\dots,S_n$ be a partition of $S$ and $k_1,k_2,\dots,k_n$ be positive integers. Let $\mathcal{I}=\{I: I \subseteq S,|I \cap S_i| \leq k_i \text { for all } 1 \leq i \leq n\}$. Prove that $\mathcal{M}=(S,\mathcal{I})$ is a matroid.
+
+    \begin{proof}
+        To prove that $\mathcal{M}=(S, \mathcal{I})$ is a matroid, we need to prove the hereditary and exchange property of it.
+
+        \textbf{Hereditary}: For any $A\subset B$, $B\in\mathcal{I}$. Since $B\subset S$, then $A\subset S$. For $i\in\{1,2, ..., n\}$ we have $|B \cap S_i| \leq k_i$, note that $|B \cap S_i| > |A \cap S_i|$, so $|A \cap S_i| \leq k_i$. Then we get $A\in\mathcal{I}$.  
+
+
+        \textbf{Exchange Property}:For $A,B\in\mathcal{I}$, $|A| < |B|$, firstly we divide $A$ by the partition of $S$, namely: $A = A_1 \cup A_2 \cup... \cup A_n$, where $A_i \cap A_j = \emptyset$ for $i\neq j\in\{1, 2, ..., n\}$,
+        $A_i \cap S_j = \emptyset$ for $i\neq j$, which means $A_i \cap S_i$.
+        
+        In the same way, we get a partition of $B$: $B = B_1 \cup B_2 \cup ... \cup B_n$. Since $|B| > |A|$, there must exist $i$, such that: $k_i \geq |B_i| > |A_i|$. So we can find $x \in B$, $x \notin A$, such that 
+        $|A^{'}| = |A_i \cup \{x\}| \leq  k_i$, so $|A^{'} \cap S_i| = |A_i| \leq k_i$, which satisfy the exchange property of a Matroid.
+        
+        \textbf{Conclusion}: Considering the two properties above, we can safely conclude that $\mathcal{M}=(S, \mathcal{I})$ is a matroid.
+    \end{proof}
+
+
+
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .pdf and .tex files in your uploaded .rar or .zip file.
+
+%========================================================================
+\end{document}
