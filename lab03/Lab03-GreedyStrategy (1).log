@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/W32TeX) (preloaded format=xelatex 2019.5.1)  24 MAR 2020 00:15
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/W32TeX) (preloaded format=xelatex 2019.5.1)  25 MAR 2020 00:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1455,27 +1455,4 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 57.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 57.
- [1
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 162.
- [2]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 162.
- (./Lab03-GreedyStrategy (1).aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 162.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 162.
-Package rerunfilecheck Info: File `"Lab03-GreedyStrategy (1)".out' has not changed.
-(rerunfilecheck)             Checksum: .
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 162.
- ) 
-Here is how much of TeX's memory you used:
- 24394 strings out of 494895
- 477154 string characters out of 6176373
- 575620 words of memory out of 5000000
- 27997 multiletter control sequences out of 15000+600000
- 544446 words of font info for 95 fonts, out of 8000000 for 9000
- 36 hyphenation exceptions out of 8191
- 53i,17n,68p,10533b,688s stack positions out of 5000i,500n,10000p,200000b,80000s
-
-Output written on Lab03-GreedyStrategy (1).pdf (2 pages).
+(Font)              Font shape

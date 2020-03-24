@@ -65,7 +65,7 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
        \begin{algorithm}[H]
            \KwIn{The pair list $T = \{(a_0, b_0), (a_1, b_1), ..., (a_n, b_n)\}$}
            \KwOut{$min$ $c_{max}$}
-           $min$ $=$ +$\infty$, $mul=1$
+           $min$ $=$ +$\infty$, $mul=a_0$
            
            Sort pair list $T$ by $a_i \times b_i$ in an increasing order.
 
@@ -84,8 +84,8 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
     \begin{proof}
        We can proof the greedy algorithm by contradiction.
        
-       If the optimal answer doesn't satisfy the increasing order of $a_i \times b_i$, we think about the 
-       adjacent pair, normally $T_i, T_{i+1}$ for $i \in \{0, 1, ..., n-1\}$, where $T_i = (a_i, b_i)$ and $T_{i+1} = (a_{i+1}, b_{i+1})$.
+       If the optimal answer doesn't satisfy the increasing order of $a_i \times b_i$, we consider the 
+       adjacent pairs, normally $T_i, T_{i+1}$ for $i \in \{0, 1, ..., n-1\}$, where $T_i = (a_i, b_i)$ and $T_{i+1} = (a_{i+1}, b_{i+1})$.
 
        Then in the optimal order, there exists an integer $i$, such that $a_i b_i > a_{i+1} b_{i+1}$. We note $\prod_{j=0}^{i-1}a_j = p$, then 
        we can calculate the costs: $c_i = \frac{p}{b_i}$, $c_{i+1} = \frac{pa_i}{b_{i+1}}$. From $a_i > 1$ we can get:
@@ -127,10 +127,80 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
     There are $n$ lectures numbered from $1$ to $n$. Lecture $i$ has duration (course length) $t_i$ and will close on $d_i$-th day. That is, you could take lecture $i$ \textbf{continuously} for $t_i$ days and must finish before or on the $d_i$-th day. The goal is to find the maximal number of courses that can be taken. (Note: you will start learning at the $1$-st day.)
     
     Please design an algorithm based on greedy strategy to solve it. You could use the data structrue learned on Data Structrue course. You need to write pseudo code and prove its correctness.
+   
+    \begin{minipage}[t]{0.80\textwidth}
+   \begin{algorithm}[H]
+       \KwIn{Course array:$T = \{(t_1, d_1), (t_2, d_2), ..., (t_n, d_n)\}$}
+       \KwOut{The max number of courses taken.}
+       $MaxHeap = Empty Heap$, $sum = 0$
+       
+       Sort the array $T_i=(t_i, d_i)$ by the deadline $d_i$ in an increasing order.
 
-%    \begin{solution}
-%        Uncomment this block to write your proof.
-%    \end{solution}
+       \For{$i$ = $1$ to $n$}{
+           \uIf{$sum + t_i \leq d_i$}{
+               $sum$ += $t_i$
+
+               $MaxHeap.push(t_i)$
+           }
+           \uElseIf{$t_i < MaxHeap.top()$}{
+               $sum$ += $(t_i - MaxHeap.top())$
+
+               $MaxHeap.pop()$
+
+               $MaxHeap.push(t_i)$
+           }
+           \uElse{
+               Continue
+           }
+
+           \Return{$MaxHeap.size()$}
+       }
+       
+   \end{algorithm}
+\end{minipage}
+
+    \begin{solution}
+      To prove the correctness of the algorithm above, we should make a reducement to the optimal answer named $A = (A_1, A_2, ...A_k)$, where $A_i=(A_i, A_i)$ which includes the start time and end time:
+
+
+      1.the optimal answer should be compact, that is: $e_i = s_{i+1}$ for $i\in\{1, 2, ..., k-1\}$ 
+
+      2.the optimal answer should minimize the total time extension $e_{k} - s_1$.
+      
+      \begin{lemma}
+          Every time in the course-choosing process, if there are more than one courses that can be arranged, we should choose the course that ends earlier, in other words, the optimal answer always choose like this.         
+      \end{lemma}
+
+      \begin{proof}
+           This Lemma is easy to prove. Same as the proof in problem 2 \textbf{(Interval Scheduling)}, we define $r$ the maximal number that the answer of greedy algorithm begins to differ that of the optimal answer. If we change the $A_r=(s_r, e_r)$ in the optimal answer to $B_r=(s_r^{'}, r_r^{'}$ in the greedy algorithm, it will not influence the optimal properties of $A$, which is actually contradictory with the basic assumption. 
+      \end{proof}
+      
+      \begin{lemma}
+          In the choosing process, if the next courses $T_i = (d_i, t_i)$, cannot be arranged, if it is less than the maximum $(e_j - s_j)$ choosen before, we replace the courses with maximum $(e_j - s_j)$:$A_j$ with $T_i$.
+      \end{lemma}
+
+      \begin{proof}
+         This lemma is intuitively right since the replace can benefit the rest of the process. So let's prove it:
+
+         Let's consider the optimal answer for the fisrt $i-1$ elements: $A_1=(s_1, e_1), A_2=(s_2, e_2), ..., A_m=(s_3, e_3)$, it should be noted that the optimal answer of part of $T$ also satisfy the two properties list above.
+
+         Assume $A_u$ has the max time extension: $e_u - s_u = \max\limits_{i=1,2, ..., m}(e_i - s_i)$, and according to the lemma we have $t_i < (e_u - s_u)$ let's think about the two things below:
+         
+         1.Replace $A_u$ with the $T_i$ will not increase $m$ by $1$. If we can, that is to say if we remove $T_i$ from the $(m+1)$-lengthed array. We can get a answer which has a size of $m$ for the 
+         first $i-1$ courses, and the time extension is obviously shorter than that in the optimal answer, which is contradictory with the property of optimal answers.
+
+         2.If we replace $A_u$ with the $T_i$, and $A_{u+1}, ..., A_{m}$ are pushed forward to make the answer list compact, the time extension will be shorter(obvious).
+
+    \section*{\normalsize{Conclusion.}} 
+    So we can safely conclude that the greedy algorithm got the right answer.
+
+
+
+
+
+    \end{proof}
+
+    \end{solution}
 
     \item
     Let $S_1,S_2,\dots,S_n$ be a partition of $S$ and $k_1,k_2,\dots,k_n$ be positive integers. Let $\mathcal{I}=\{I: I \subseteq S,|I \cap S_i| \leq k_i \text { for all } 1 \leq i \leq n\}$. Prove that $\mathcal{M}=(S,\mathcal{I})$ is a matroid.
