@@ -1,0 +1,230 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\hypersetup{colorlinks=true,linkcolor=black}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+\begin{document}
+\renewcommand\tablename{Table}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab04-Matroid}}\vspace{1mm}\\
+CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
+\begin{center}
+\footnotesize{\color{red}$*$ If there is any problem, please contact TA Yiming Liu.}
+
+% Please write down your name, student id and email.
+\footnotesize{\color{blue}$*$ Name:Haotian Xue  \quad Student ID:518021910506 \quad Email: xavihart@sjtu.edu.cn}
+\end{center}
+
+\begin{enumerate}
+\item Give a directed graph $G=(V,E)$ whose edges have integer weights. Let $w(e)$ be the weight of edge $e\in E$. We are also given a constraint $f(u)\geq 0$ on the out-degree of each node $u\in V$. Our goal is to find a subset of edges with maximal weight, whose out-degree at any node is no greater than the constraint.
+	\begin{enumerate}
+	    \item Please define independent sets and prove that they form a matroid.
+	    \item Write an optimal greedy algorithm based on Greedy-MAX in the form of \emph{pseudo code}.
+	    \item Analyze the time complexity of your algorithm.
+	\end{enumerate}
+
+
+\section*{Solution of Problem 1}
+
+	(a) \textbf{Definition of independent sets:} Define the edge set $A \subset E$ and the vertex set of $A$ is $V_A$, also $V_A \subset V$, 
+	if for any $u \in V_A$ we have the out degree of $u$ in edge set $A$ is no greater than $f(u)$, we can say $A$ is an independent set. 	
+	We define the set of independent sets $C$. We want to prove the $\mathcal{M} = (E, C)$ is a matroid. We define the vertex set of an edge set $X$ is $V_X$, and 
+	the out degree of vertex $u$ int $V_X$ is $out(u, X)$. 
+	\begin{proof}
+		It is easy to prove the hereditary of $\mathcal{M}=(E, C)$, since for any $A \subset B, B \in C$, for any vertex $u \in V_B$, $u \in V_A$, we can get:
+		$f(u) \geq out(u, B) \geq out(u, A)$. So $A$ is also an independent set, $A \subset C$.
+
+		To prove the exchange property, we will use an obvious lemma: for edge set $X$, we have: 
+		
+		\begin{equation*}
+			\sum \limits_{u \in V_X} out(u, X) = |X|
+		\end{equation*}
+		
+		Then, for $A, B \subset C$, $|A| < |B|$, we have: $\sum \limits_{u \in V_A} out(u, A) < \sum \limits_{u \in V_B} out(u, B)$, there must exists one vertex $u_0$, such that $out(u_0, A) < out(u_0, B) \leq f(u_0)$, 
+		which means that the number of edges start from $u_0$ in $A$ is less than that in $B$, so we can find an edge $x \in B - A$, define $A^{'} = A \cup \{x\}$, $out(u_0, A^{'}) = out(u_0, A) + 1 \leq f(u_0)$. So $A^{'} \subset C$.
+		 
+		Considering the two properties above, we have $\mathcal{M} = (E, C)$ is a matroid.
+		\end{proof}
+
+	(b)The pseudo code of MAX-Greedy Algorithm. 
+
+	\begin{minipage}[t]{0.80\textwidth}
+		\begin{algorithm}[H]
+			\KwIn{Directed graph $G = (V, E)$, constraint list $F = \{f(u_1), f(u_2), ..., f(u_{|V|})\}$, weight list $W = \{w(e_1), w(e_2), ..., w(e_{|E|})\}$}
+			\KwOut{Edge set $E_{max}$ which has the maximum weight.}
+
+			$E_{max} = \{ \}$, $OutDegreeMap = \{v_1:0, v_2:0, ..., v_{|V|}:0\}$
+
+			Sort the edges by weight in an decreasing order.
+
+			\For{$i$ = $1$ to $|E|$}{
+
+				$u$ = start vertex of $e_i$
+
+				\If{$OutDegree(u) + 1 \leq f(u)$}{
+				   $E_{max} = E_{max} \cup \{e_i\}$
+				  
+				   OutDegree(u) = OutDegree(u) + 1
+
+				}
+			}
+			\Return{$E_{max}$}
+		 \end{algorithm}
+		 \end{minipage} 
+
+
+		 (c) The sort part in the algorithm has a time complexity of $O(|E|\log |E|)$. The loop part is O(|E|) since in each loop, we use a map to query and change value of out degrees.
+		 So the final time complexity is $O(|E|\log |E|)$.
+
+
+
+\item Let $X$, $Y$, $Z$ be three sets. We say two triples $\left(x_{1}, y_{1}, z_{1}\right)$ and $\left(x_{2}, y_{2}, z_{2}\right)$ in $X \times Y \times Z$ are \textit{disjoint} if $x_{1} \neq x_{2}$, $y_{1} \neq y_{2},$ and $z_{1} \neq z_{2}$. Consider the following problem:
+    
+    \begin{definition}[MAX-3DM] 
+        Given three disjoint sets $X$, $Y$, $Z$ and a nonnegative weight function $c(\cdot)$ on all triples in $X \times Y \times Z$, \textbf{Maximum 3-Dimensional Matching} (MAX-3DM) is to find a collection $\mathcal{F}$ of disjoint triples with maximum total weight.
+    \end{definition}
+
+    \begin{enumerate}
+    	\item Let $D = X \times Y \times Z$. Define independent sets for MAX-3DM.
+    	\item Write a greedy algorithm based on Greedy-MAX in the form of \emph{pseudo code}. \label{Item-Greedy}
+    	\item Give a counterexample to show that your Greedy-MAX algorithm in Q.~\ref{Item-Greedy} is not optimal.
+    	\item Show that: $\max\limits_{F \subseteq D} \frac{v(F)}{u(F)} \leq 3$. {\color{blue}(Hint: you may need Theorem~\ref{Thm-Intersect} for this subquestion.)} 
+    \end{enumerate}
+    \begin{theorem} \label{Thm-Intersect}
+        Suppose an independent system $(E, \mathcal{I})$ is the intersection of $k$ matroids $\left(E, \mathcal{I}_{i}\right)$, $1 \leq i \leq k$; that is, $\mathcal{I}=\bigcap_{i=1}^{k} \mathcal{I}_{i}$. Then $\max\limits_{F \subseteq E} \frac{v(F)}{u(F)} \leq k$, where $v(F)$ is the maximum size of independent subset in $F$ and $u(F)$ is the minimum size of maximal independent subset in $F$.
+    \end{theorem}
+ 
+	\section*{Solution of Problem 2}
+	
+	(a)
+	
+	We consider the set as a 3-D matches between $X, Y, Z$. The set $A$ is an independent set if and only if 
+	every two matches in $A$ are disjoint with each other.
+
+
+
+	(b)
+	
+	 \begin{minipage}[t]{0.90\textwidth}
+		\begin{algorithm}[H]
+		   \KwIn{Three sets: $X=\{x_1, ..., x_{n_X}\}, Y=\{y_1, y_2, ..., y_{n_Y}\}, Z=\{z_1, z_2, ..., z_{n_Z}\}$ and the weight matrix $W[n_X][n_Y][n_Z]$}
+		   \KwOut{The indepent set with the max weight: $C$}
+		   $C$ = $\{ \}$
+
+		   Construct the list of triple $Triples = \{(x_i, y_j, z_k)\}$ for $i=1, 2, ..., n_X$, $j = 1, 2, ..., n_Y$, $k = 1, 2, ..., n_Z$. 
+		   
+		   Sort $Triples$ by weights of triples in an decreasing order.
+
+		   \For{$i$ = 1 to $n_X n_Y n_Z$}{
+               \If{$A[i]$ is disjoint with any triples in $C$}{
+				   $C = C \cup \{Triple[i]\}$
+			   }
+		   }
+		   \Return{C}
+		\end{algorithm}
+    \end{minipage} 
+
+
+
+	(c)
+
+	\textbf{Counterexample} : $X = \{x_1, x_2\}, Y=\{y_1, y_2\}, Z = \{z_1, z_2\}$, the weights of the triples is shown in Table 1.
+
+	Using the Greedy-MAX algorithm, we first choose $(x_1, y_1, z_1)$ which has the maximal weight, then we can only choose $(x_2, y_2, z_2)$. So the independent set 
+	accquired is $\{(x_1, y_1, z_1), (x_2, y_2, z_1)\}$ which has a weight of $110$, however the independent set $\{(x_1, y_2, z_2), (x_2, y_1, z_1)\}$ 
+	has a weight of $115$. So the Greedy-MAX cannot get an optimal answer in this example.
+
+	\begin{table}[]\label{tab}
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline
+		    $(x_1, y_1, z_1)$	&		100     \\
+			$(x_1, y_1, z_2)$   &       10    \\
+			$(x_1, y_2, z_1)$	&		10	 \\
+			$(x_1, y_2, z_2)$	&		60	 \\
+			$(x_2, y_1, z_1)$	&		55	 \\
+			$(x_2, y_1, z_2)$	&		40	 \\
+			$(x_2, y_2, z_1)$	&		30	 \\
+			$(x_2, y_2, z_2)$	&		10	 \\
+			\hline
+		\end{tabular}
+		\caption{Counterexample}
+	\end{table}
+
+
+
+	(d) 
+	
+	We can use \textbf{Theorem 1} to prove the inequality.
+
+	Firstly, we define the current independent system $(E, \mathcal{I})$ which is defined in (a). Each $A \subset \mathcal{I}$ is a disjoint matching on $X, Y, Z$. Then we define another three independent systems:
+	$(E, \mathcal{I}_X)$, $(E, \mathcal{I}_Y)$ and $(E, \mathcal{I}_Z)$, and their definition are as follows:
+
+	\begin{itemize}
+		\item $(E, \mathcal{I}_X)$: $A \subset \mathcal{I}_X$ if and only if : for any $(x_i, y_i, z_i), (x_j, y_j, z_j) \in \mathcal{I}_X$, $x_i \neq x_j$($i \neq j$).
+	\end{itemize}
+
+	\begin{itemize}
+		\item $(E, \mathcal{I}_Y)$: $A \subset \mathcal{I}_Y$ if and only if : for any $(x_i, y_i, z_i), (x_j, y_j, z_j) \in \mathcal{I}_X$, $y_i \neq y_j$($i \neq j$).
+	\end{itemize}
+
+	\begin{itemize}
+		\item $(E, \mathcal{I}_Z)$: $A \subset \mathcal{I}_Z$ if and only if : for any $(x_i, y_i, z_i), (x_j, y_j, z_j) \in \mathcal{I}_X$, $z_i \neq z_j$($i \neq j$).
+	\end{itemize}
+
+
+
+	\item
+	\textbf{Crowdsourcing} is the process of obtaining needed services, ideas, or content by soliciting contributions from a large group of people, especially an online community. Suppose you want to form a team to complete a crowdsourcing task, and there are $n$ individuals to choose from. Each person $p_i$ can contribute $v_i$ ($v_i > 0$) to the team, but he/she can only work with up to $c_i$ other people. Now it is up to you to choose a certain group of people and maximize their total contributions ($\sum_i{v_i}$).
+	
+	\begin{enumerate}
+		\item Given $\text{OPT}(i, b, c)=$ maximum contributions when choosing from $\{p_1, p_2, \cdots, p_i\}$ with $b$ persons from $\{p_{i+1}, p_{i+2}, \cdots, p_n\}$ already on board and at most $c$ seats left before any of the existing team members gets uncomfortable. Describe the optimal substructure as we did in class and write a recurrence for $\text{OPT}(i, b, c)$.
+		\item Design an algorithm to form your team using dynamic programming, in the form of \emph{pseudo code}.
+        \item Analyze the time and space complexities of your design.
+	\end{enumerate}
+\end{enumerate}
+
+\vspace{20pt}
+
+\textbf{Remark:} You need to include your .pdf and .tex files in your uploaded .rar or .zip file.
+
+%========================================================================
+\end{document}
