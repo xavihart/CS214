@@ -69,10 +69,10 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 	We define the set of independent sets $C$. We want to prove the $\mathcal{M} = (E, C)$ is a matroid. We define the vertex set of an edge set $X$ is $V_X$, and 
 	the out degree of vertex $u$ int $V_X$ is $out(u, X)$. 
 	\begin{proof}
-		It is easy to prove the hereditary of $\mathcal{M}=(E, C)$, since for any $A \subset B, B \in C$, for any vertex $u \in V_B$, $u \in V_A$, we can get:
+		It is easy to prove the \textbf{hereditary} of $\mathcal{M}=(E, C)$, since for any $A \subset B, B \in C$, for any vertex $u \in V_B$, $u \in V_A$, we can get:
 		$f(u) \geq out(u, B) \geq out(u, A)$. So $A$ is also an independent set, $A \subset C$.
 
-		To prove the exchange property, we will use an obvious lemma: for edge set $X$, we have: 
+		To prove the \textbf{exchange property}, we will use an obvious lemma: for edge set $X$, we have: 
 		
 		\begin{equation*}
 			\sum \limits_{u \in V_X} out(u, X) = |X|
@@ -199,28 +199,130 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 	$(E, \mathcal{I}_X)$, $(E, \mathcal{I}_Y)$ and $(E, \mathcal{I}_Z)$, and their definition are as follows:
 
 	\begin{itemize}
-		\item $(E, \mathcal{I}_X)$: $A \subset \mathcal{I}_X$ if and only if : for any $(x_i, y_i, z_i), (x_j, y_j, z_j) \in \mathcal{I}_X$, $x_i \neq x_j$($i \neq j$).
+		\item $(E, \mathcal{I}_X)$: $A \in \mathcal{I}_X$ if and only if : for any $(x_i, y_i, z_i), (x_j, y_j, z_j) \in \mathcal{I}_X$, $x_i \neq x_j$($i \neq j$).
 	\end{itemize}
 
 	\begin{itemize}
-		\item $(E, \mathcal{I}_Y)$: $A \subset \mathcal{I}_Y$ if and only if : for any $(x_i, y_i, z_i), (x_j, y_j, z_j) \in \mathcal{I}_X$, $y_i \neq y_j$($i \neq j$).
+		\item $(E, \mathcal{I}_Y)$: $A \in\mathcal{I}_Y$ if and only if : for any $(x_i, y_i, z_i), (x_j, y_j, z_j) \in \mathcal{I}_X$, $y_i \neq y_j$($i \neq j$).
 	\end{itemize}
 
 	\begin{itemize}
-		\item $(E, \mathcal{I}_Z)$: $A \subset \mathcal{I}_Z$ if and only if : for any $(x_i, y_i, z_i), (x_j, y_j, z_j) \in \mathcal{I}_X$, $z_i \neq z_j$($i \neq j$).
+		\item $(E, \mathcal{I}_Z)$: $A \in \mathcal{I}_Z$ if and only if : for any $(x_i, y_i, z_i), (x_j, y_j, z_j) \in \mathcal{I}_X$, $z_i \neq z_j$($i \neq j$).
 	\end{itemize}
 
+
+	Then we prove that $(E, \mathcal{I}_X)$ is a matroid, and $(E, \mathcal{I}_Y)$, $(E, \mathcal{I}_Z)$ can
+	be proved in the same way.
+
+	\begin{itemize}
+		\item{\textbf{Hereditary}} For any $A \in \mathcal{I}_X, B \subset A$, since any mathches $(x, y, z), (x_0, y_0, z_0) \in B$, we have $(x, y, z), (x_0, y_0, z_0) \in A$. So $x \neq x_0$, then $B \in \mathcal{I}_X$.
+	    \item{\textbf{Exchange Property}} For any $A, B \in \mathcal{I}_X$, $|A| < |B|$. Since each triple in $A$ has different $x$, let $A_X$ be the set of $x$ in $A$, we can get $|A_X| = |A|$, samely we have:
+	    $|B_X| = |B|$, so $|B_X| > |A_X|$, then there exists one triple $(x_0, y_0, z_0) \in B$, $x_0 \notin A_X$. So $A^{'} = \{(x_0, y_0, z_0)\} \cup A \in \mathcal{I}_X$.  
+	\end{itemize}
+
+	Considering the following equation and \textbf{Theorem 1}:
+
+	\begin{equation*}
+		\mathcal{I} = \mathcal{I}_X \cap \mathcal{I}_Y \cap \mathcal{I}_Z
+	\end{equation*}
+
+	So we have: $\max\limits_{F \subseteq D} \frac{v(F)}{u(F)} \leq 3$.
 
 
 	\item
 	\textbf{Crowdsourcing} is the process of obtaining needed services, ideas, or content by soliciting contributions from a large group of people, especially an online community. Suppose you want to form a team to complete a crowdsourcing task, and there are $n$ individuals to choose from. Each person $p_i$ can contribute $v_i$ ($v_i > 0$) to the team, but he/she can only work with up to $c_i$ other people. Now it is up to you to choose a certain group of people and maximize their total contributions ($\sum_i{v_i}$).
-	
+	 
+
+
+
 	\begin{enumerate}
 		\item Given $\text{OPT}(i, b, c)=$ maximum contributions when choosing from $\{p_1, p_2, \cdots, p_i\}$ with $b$ persons from $\{p_{i+1}, p_{i+2}, \cdots, p_n\}$ already on board and at most $c$ seats left before any of the existing team members gets uncomfortable. Describe the optimal substructure as we did in class and write a recurrence for $\text{OPT}(i, b, c)$.
 		\item Design an algorithm to form your team using dynamic programming, in the form of \emph{pseudo code}.
         \item Analyze the time and space complexities of your design.
 	\end{enumerate}
 \end{enumerate}
+
+\section*{Solution of Problem 3}
+
+(a)
+
+Since $OPT(i, b, c)$ tries to maximize value of $\{p_1, p_2, ..., p_i\}$, with the restrictions of $c$ which 
+give the ceiling of number of people choosen. $b$ represent the people already choosen in  $\{p_{i+1}, ..., p_{n}\}$, 
+which restrict our choise of the next person when operating the recursion. 
+
+\textbf{Optiaml substructure}:
+
+\begin{itemize}
+	\item \textbf{Case 1}: $p_i$ is not selected.
+	 
+	Since $p_i$ is not selected, choosing from $\{p_1, p_2, ..., p_i\}$ is equivlatent to choosing from $\{p_1, p_2, ..., p_{i-1}\}$. We can refer to the last recurrence 
+	for maximal value. So we have $OPT(i, b, c) = OPT(i-1, b, c)$ in this case. It should be noted that when $c_i < b$, we must 
+	refer to this case.
+
+	\item \textbf{Case 2}: $p_i$ is selected.
+	
+	When $p_i$ is selected, we should change $b$ and $c$ when move from $i-1$ to $i$. Also we add the value by $v_i$, so we actually have:
+	$OPT(i, b, c) = OPT(i - 1, b + 1, min\{c-1, c_i - b\}) + v_i$. When this case happens, $b_i$ must be greater than $b$.
+
+\end{itemize}
+
+   Considering the two cases above, we have the recurrence relationship:
+ 
+   \begin{equation*}
+	OPT(i, b, c)=\left\{
+	\begin{array}{lcl}
+	0 & & i=0 ~ or ~ c = 0\\
+	OPT(i - 1, b, c) & & c_i < b, i \geq 1\\
+	max\{OPT(i-1, b, c), OPT(i - 1, b + 1, min\{c-1, c_i - b\}) + v_i\} & & c_i \geq b, i \geq 1\\
+	\end{array} \right.
+	\end{equation*}
+
+	The final optiaml answer can be represented as $OPT(n, 0, n)$.
+
+(b) \textbf{Pseudo code for the algorithm above}(non-recursion type):
+
+\begin{minipage}[t]{0.8\textwidth}
+	\begin{algorithm}[H]
+	   \KwIn{Value list $v = [v_1, v_2, ..., v_n]$, restriction list $[c_1, c_2, ..., c_n]$.}
+	   \KwOut{The maximum values we can get.}
+	
+	Construct a 3-Dimensional table $OPT$ with a size of $(n+1)\times (n+1)\times (n+1)$.
+	
+	Set all value of table $OPT$ to $0$.
+	
+	\For{i = 1 to n}{
+        \For{j = 1 to n - i + 1}{
+			\For{k = 1 to n}{
+                \If{$c[i] < b[i]$}{
+                 $OPT[i][j][k] = OPT[i - 1][j][k]$
+				}
+				\Else{
+					$OPT[i][j][k] = max\{OPT[i - 1][j][k], v[i] + OPT[i - 1][j + 1][min\{c[i] - j, k - 1\}]\}$
+				}
+			}
+		}
+	}
+	\Return{$OPT[n][0][n]$}
+	\end{algorithm}
+
+	* The second-level loop starts from $1$ to $n-i+1$ since the $b$ in $OPT(i, b, c)$ will at most be increased by $1$ in one move forward.
+\end{minipage} 
+
+
+(c) The time and space complexity:
+
+\begin{itemize}
+	\item \textbf{Time Complexity}: the time complexity should be:
+	\begin{equation*}
+		\sum_{i = 1}^{n}\sum_{j = 1}^{n - i + 1}\sum_{k = 1}^{n} 1 = O(n^3)
+	\end{equation*}
+
+	\item \textbf{Space Complexity}: Since we just use the 3-Dimensional table to save the value 
+	without any other intermediate areas. We have the space complexity is $O(n^3)$.
+\end{itemize}
+
+
+
 
 \vspace{20pt}
 
