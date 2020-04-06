@@ -65,19 +65,19 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
        \begin{algorithm}[H]
            \KwIn{The pair list $T = \{(a_0, b_0), (a_1, b_1), ..., (a_n, b_n)\}$}
            \KwOut{$min$ $c_{max}$}
-           $min$ $=$ +$\infty$, $mul=a_0$
+           $max$ $=$ -$\infty$, $mul=a_0$
            
            Sort pair list $T$ by $a_i \times b_i$ in an increasing order.
 
            \For{$i=1$ to $n$}{
                $tmp$ = $\frac{mul}{b_i}$
 
-               \If{$tmp< min$}{
-                   $min = tmp $
+               \If{$tmp > min$}{
+                   $max = tmp $
                }
                $mul = mul \times a_i$
            }
-           \Return{min}
+           \Return{$max$}
         \end{algorithm}
         \end{minipage} 
     
@@ -153,9 +153,9 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
                Continue
            }
 
-           \Return{$MaxHeap.size()$}
+          
        }
-       
+        \Return{$MaxHeap.size()$}
    \end{algorithm}
 \end{minipage}
 
