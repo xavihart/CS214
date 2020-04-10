@@ -49,7 +49,7 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 \footnotesize{\color{red}$*$ If there is any problem, please contact TA Shuodian Yu.}
 
 % Please write down your name, student id and email.
-\footnotesize{\color{blue}$*$ Name:\_\_\_\_\_\_\_\_\_  \quad Student ID:\_\_\_\_\_\_\_\_\_ \quad Email: \_\_\_\_\_\_\_\_\_\_\_\_}
+\footnotesize{\color{blue}$*$ Name:Haotian Xue  \quad Student ID:518021910506 \quad Email: xavihart@sjtu.edu.cn}
 \end{center}
 
 \begin{enumerate}
@@ -67,9 +67,35 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 
     Given $n=5$ books, and $\{(t_i,w_i)|1\leq i \leq 5\} = \{(1,12),(1,3),(2,15),(2,5),(2,1)\}$. The algorithm should return $5$.
 
-%    \begin{solution}
-%        Uncomment this block to write your proof.
-%    \end{solution}
+    \begin{solution}
+        We can define the $OPT(i, j)$ which is equal to the minimal horizontal length of the upper book we can get when we arrange the first $ith$ books and the vertical books 
+        has a total lthickness of $j$. If we cannot arrange the $ith$ books with the vertical thickness equal to $j$, $OPT(i, j) = +\infty$.
+
+        So we can easily get the optimal structure:
+
+        \begin{itemize}
+            \item We select the $ith$ book to be vertical: then $OPT(i, j) = OPT(i - 1, j - t[i])$.
+            \item We select the $ith$ book to be horizontal: the $OPT(i, j) = OPT(i - 1, j)$ 
+        \end{itemize}
+
+        So the final recurssion will be:
+
+        \begin{equation*}
+            OPT(i, j)=\left\{
+            \begin{array}{lcl}
+            +\infty & & ij = 0 ~ and ~ i +j \neq 0\\
+            0 & & i = j = 0\\
+            min(OPT(i - 1, j - t[i]), OPT(i - 1, j))  & & otherwise          
+            \end{array} \right.
+            \end{equation*}
+
+
+    \end{solution}
+
+
+    Also we should have the upper length no greater than the vertical thickness, so we can just tranverse $OPT(n, j)$ to find the minimal $j$ to make $OPT(n, j) <= j$.
+
+    Answer: the output of Code-P1.py is 2542.
 
     \item
     Recall the \emph{String Similarity} problem in class, in which we calculate the edit distance between two strings in a sequence alignment manner.
@@ -99,9 +125,15 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
         \item
         Using your program, find the edit distance between the two DNA sequences found in attachments \texttt{Data-P2a.txt} and \texttt{Data-P2b.txt}.
     \end{enumerate}
-%    \begin{solution}
-%        Uncomment this block to write your proof.
-%    \end{solution}
+
+    \section*{\normalsize{Solution}}
+        (a) The outputs are in "./result/resulta.txt" and "./result/resultb.txt" respectively.
+
+        (b) Penalty in optimal condition : 7615
+
+        * To run Code-P2.cpp, you should put the "Data-P1a.txt" and "Data-P2b.txt" in the dir of code file. "./result2" is used to save the modified DNA.
+        After compling Code-P2.cpp and run the execution file, you can get the minimal penalty, also you can use test.cpp to calculate the penalty of two DNA 
+        strings in "./result2". 
 
 \end{enumerate}
 

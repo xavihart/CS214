@@ -27,6 +27,13 @@ int Cost[5][5] = {
 
 //ans stack
 vector<pair<int, int>> path;
+int last[100010];
+int pres[100010];
+int last2[100010];
+int pres2[100010];
+int dp[100010][2];
+int s[100010][2];
+
 
 
 
@@ -55,10 +62,16 @@ int find_row(int a1, int b1, int a2, int b2){
     // assert a2 > a1, b2 > b1, a2 - a1 > 1
 
     // cal f(a1, *) (0, 0) -> (a1, i) 
+    /*
     int *last, *pres;
-    int mid = (a1 + a2) >> 1;
+    
     last = new int[b2 + 5];
     pres = new int[b2 + 5];
+    */
+
+
+    int mid = (a1 + a2) >> 1;
+   
 
 
     for(int i = 0;i < b2 + 5;++i){
@@ -67,20 +80,22 @@ int find_row(int a1, int b1, int a2, int b2){
     }
 
     for(int i = b1 + 1;i <= b2;++i){
-        last[i] = last[i - 1] + cost('-', B[i]);
+        last[i] = last[i - 1] + Cost[0][B[i] - '0'];
     }
     
     int tmp = 0;
     for(int i = a1 + 1;i <= mid;++i){
+        //cout << i << "\n";
         for(int j = b1;j <= b2;++j){
             if(j == b1){
-                pres[j] = tmp + cost('-', A[i]);
+                pres[j] = tmp + Cost[0][A[i] - '0'];
+                tmp += Cost[0][A[i] - '0'];
                 continue;
             }
             int k1, k2, k3;
-            k1 = last[j - 1] + cost(A[i], B[j]);
-            k2 = last[j] + cost('-', A[i]);
-            k3 = pres[j - 1] + cost('-', B[j]); 
+            k1 = last[j - 1] + Cost[A[i] - '0'][B[j] - '0'];
+            k2 = last[j] + Cost[0][A[i] - '0'];
+            k3 = pres[j - 1] + Cost[0][B[j] - '0']; 
             pres[j] = min(min(k1, k2), k3);
         }
         for(int m = 0;m < b2 + 5;++m)
@@ -90,32 +105,41 @@ int find_row(int a1, int b1, int a2, int b2){
 
 
     // cal g(a1, *): from (a2, b2) to (mid, *)
-
+    /*
     int *last2, *pres2;
     last2 = new int[b2 + 5];
     pres2 = new int[b2 + 5];
+    */
+
+    
 
     for(int i = 0;i < b2 + 5;++i){
         last2[i] = 0;
         pres2[i] = 0;
     }
 
-    for(int i = b2 + 1;i <= b1;--i){
-        last2[i] = last2[i + 1] + cost('-', B[i]);
+    for(int i = b2 - 1;i >= b1;--i){
+        last2[i] = last2[i + 1] + Cost[0][B[i + 1] - '0'];
     }
 
+    
 
     tmp = 0;
     for(int i = a2 - 1;i >= mid; --i){
         for(int j = b2;j >= b1; --j){
+
             if(j == b2){
-                pres[j] = tmp + cost('-', A[i]);
+                pres2[j] = tmp + Cost[A[i + 1] - '0'][0];
+                tmp += Cost[A[i + 1] - '0'][0];
+                continue;
             }
+
             int k1, k2, k3;
-            k1 = last2[i + 1] + cost(A[i], B[j]);
-            k2 = last2[i] + cost('-', A[i]);
-            k3 = pres2[j + 1] + cost('-', B[j]);
+            k1 = last2[j + 1] + Cost[A[i + 1] - '0'][B[j + 1] - '0'];
+            k2 = last2[j] + Cost[0][A[i + 1] - '0'];
+            k3 = pres2[j + 1] + Cost[0][B[j +1] - '0'];
             pres2[j] = min(min(k1, k2), k3);
+
         }
         for(int m = 0;m < b2 + 5;++m)
             last2[m] = pres2[m];
@@ -130,7 +154,8 @@ int find_row(int a1, int b1, int a2, int b2){
             min_index = i;
         }
     }
-  
+
+
     return min_index;
 }
 
@@ -149,20 +174,24 @@ vector<pair<int, int>>  HischbergAlg(int a1, int a2, int b1, int b2){
     if(a1 == a2){
         for(int j = b1;j <= b2;++j)
             p.push_back(make_pair(a1, j));
-        //return p;
+        return p;
     }   
+
+
+
     if(a2 - a1 > 1){
         int min_row = find_row(a1, b1, a2, b2);
-        p.push_back(make_pair(min_row, mid));
+        //p.push_back(make_pair(min_row, mid));
         vector<pair<int, int>> left, right;
         left = HischbergAlg(a1, mid, b1, min_row);
         right = HischbergAlg(mid, a2, min_row, b2);
         left.pop_back();
         p = left + right;
-    }else{
+    }
+    else if(a2 - a1 == 1){
         // a2 - a1 = 1
         // just dp to find opt path from (a1, b1) to (a2, b2)
-  
+        /*
         int **dp;
         dp = new int*[b2+5];
         for(int i  = 0;i < b2 + 5;++i)
@@ -177,19 +206,25 @@ vector<pair<int, int>>  HischbergAlg(int a1, int a2, int b1, int b2){
             for(int j = 0;j < 3;++j)
                 dp[i][j] = 0;
 
+        */
+
+       dp[b1][0] = 0;
 
         for(int i = b1 + 1;i <= b2;++i){
-            dp[i][0] = dp[i - 1][0] + cost('-', B[i]);
+            dp[i][0] = dp[i - 1][0] +  Cost[0][B[i] - '0'];
             s[i][0] = 1;
         }
 
-        dp[b1][1] = dp[b1][0] + cost('-', A[a1]);
+        dp[b1][1] = dp[b1][0] + Cost[0][A[a1 + 1] - '0'];
+        s[b1][1] = 2;
+
+
 
         for(int i = b1 + 1;i <= b2;++i){
             int k1, k2, k3;
-            k3 = dp[i - 1][0] + cost(B[i], A[a1+1]);
-            k2 = dp[i][0] + cost('-', A[a1 + 1]);
-            k1 = dp[i - 1][1] + cost('-', B[i]);
+            k3 = dp[i - 1][0] + Cost[B[i] - '0'][A[a1 + 1] - '0'];
+            k2 = dp[i][0] + Cost[0][A[a1 + 1] - '0'];
+            k1 = dp[i - 1][1] + Cost[0][B[i] - '0'];
             dp[i][1] = min(min(k1, k2), k3);
             if(dp[i][1] == k1){
                 s[i][1] = 1;
@@ -200,68 +235,18 @@ vector<pair<int, int>>  HischbergAlg(int a1, int a2, int b1, int b2){
             else if(dp[i][1] == k3){
                 s[i][1] = 3;
             }
-
-
         }
 
         //cout << dp[0][0] << endl;
         
-        /*
-        for(int i = a1;i <= a1 + 1;++i){
-            for(int j = b1;j <= b2;++j){
-                int k1, k2, k3;
-                int i_ = i - a1 + 1, j_ = j+1;
-                cout << j << i_ << endl;
-                k1 = dp[j_ - 1][i_ - 1] + cost(A[i], B[j]);
-                k2 = dp[j_][i_ - 1] + cost('-', A[i]);
-                k3 = dp[j_ - 1][i_] + cost('-', B[j]);
-                dp[j_][i_] = min(min(k1, k2), k3);
-                if(dp[j_][i_] == k1){
-                    s[j_][i_] = 1;
-                }
-                else if(dp[j_][i_] == k2){
-                   s[j_][i_] = 2;
-                }
-                else{
-                   s[j_][i_] = 3;
-                }
-            }
-        }
-       
-
-       
-
-        for(int i = 0;i < b2+5;++i)
-        {
-            for(int j = 0;j < 3;++j){
-                cout << dp[i][j] << " ";
-            }
-            cout << endl;
-        }
-
-        cout << endl;
-
-        for(int i = 0;i < b2+5;++i)
-        {
-            for(int j = 0;j < 3;++j){
-                cout << s[i][j] << " ";
-            }
-            cout << endl;
-        }
-
-        cout << endl;
- */
-
-
-         
       
-        ///????
+
         int a=a2, b=b2;
         
-  
-       
+        
+       int q = 0;
+
         while(a != a1 || b != b1){
-            
             switch(s[b][a- a1]){
                 case 3:
                     a --;
@@ -280,10 +265,17 @@ vector<pair<int, int>>  HischbergAlg(int a1, int a2, int b1, int b2){
         }
 
         p.insert(p.end(), make_pair(a2, b2));
+
+
     }
 
-    std::cout << a1 << b1 << a2 << b2 << endl;
-    show_path(p);
+    else{
+        cout << "assert a1, a2!!!\n";
+        system("pause");
+    }
+
+    //std::cout << a1 << b1 << a2 << b2 << endl;
+    //show_path(p);
     return p;
 
 }
@@ -293,27 +285,76 @@ void WriteDNA(){
     // get the modified dna according the path
     pair<int, int> pre = make_pair(0, 0);
     int pa=1, pb=1;
-    for(int i = 1;i < path.size();++i){
+
+    int pena=0;
+    for(int i = 1; i < path.size();++i){
         if(path[i].first == pre.first){
-            A.insert(pa, 1, '-');
+            pena += Cost[0][B[path[i].second] - '0'];
         }
         else if(path[i].second == pre.second){
-            B.insert(pb, 1, '-');
+            pena += Cost[0][A[path[i].first]- '0'];
+        }
+        else {
+            pena += Cost[A[path[i].first]- '0'][B[path[i].second]- '0'];
+        }
+        pre = make_pair(path[i].first, path[i].second);
+    }
+
+    pre = make_pair(0, 0);
+
+
+    for(int i = 1;i < path.size();++i){
+        if(path[i].first == pre.first){
+            A.insert(pa, 1, '0');
+        }
+        else if(path[i].second == pre.second){
+            B.insert(pb, 1, '0');
         }
        
             pa ++;
             pb ++;
         
-
         pre = make_pair(path[i].first, path[i].second);
     }
     
     
     A.erase(0, 1);
     B.erase(0, 1);
-    show_path(path);
-   std::cout << A << endl;
-   std::cout << B << endl;
+    //show_path(path);
+    int pen = 0;
+    for(int i = 0;i < A.size();++i){
+        pen += Cost[A[i] - '0'][B[i] - '0'];
+    }
+
+    for(int i = 0;i < A.size();++i){
+        A[i] = id_to_dna[A[i] - '0'];
+    }
+
+    for(int i = 0;i < B.size();++i){
+        B[i] = id_to_dna[B[i] - '0'];
+    }
+
+   //std::cout << A << endl;
+   //std::cout << B << endl;
+
+
+   ofstream oa("./result2/resulta.txt"), ob("./result2/resultb.txt");
+
+   if(!oa || !ob){
+       cout << "result file open failed!!!\n";
+   }
+
+   oa << A;
+   ob << B;
+
+   oa.close();
+   ob.close();
+
+   cout << pen << endl;
+
+
+   //show_path(path);
+
 }
 
 
@@ -335,7 +376,14 @@ void init(){
     char c;
     while(fina.get(c)){
          if(c == '\n') continue;
-         A.push_back(c);  
+
+         switch(c){
+             case 'A':A.push_back('1');break;  
+             case 'T':A.push_back('2');break;  
+             case 'G':A.push_back('3');break;  
+             case 'C':A.push_back('4');break;  
+         }
+   
     }
     cout << "Get DATA of A succeffully---total length: " << A.size() << endl;
     fina.close();
@@ -348,7 +396,12 @@ void init(){
     
     while(finb.get(c)){
          if(c == '\n') continue;
-         B.push_back(c);  
+         switch(c){
+             case 'A':B.push_back('1');break;  
+             case 'T':B.push_back('2');break;  
+             case 'G':B.push_back('3');break;  
+             case 'C':B.push_back('4');break;  
+         } 
     }
     std::cout << "Get DATA of B succeffully---total length: " << B.size() << endl;
     finb.close();
@@ -367,7 +420,7 @@ int main(){
     path = HischbergAlg(0, lena, 0, lenb);
     std::cout << "path finded---\n";
     WriteDNA();
-    std::cout << "Done ----";
+    std::cout << "Done ----\n";
     system("pause");
     return 0;
 }
