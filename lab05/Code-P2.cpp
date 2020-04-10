@@ -5,18 +5,6 @@
 #include<cstring>
 #include<string>
 using namespace std;
-
-// dna string
-string A = "*";   // to make A[1] be the first element
-string B = "*";   
-int lena, lenb;
-
-
-// map and matrix
-map<char, int> dna_to_id;
-map<int, char> id_to_dna;
-char dna[5] = {'-', 'A', 'T', 'G', 'C'};
-char* opti_list;
 int Cost[5][5] = {
     {0, 1, 2, 1, 3}, 
     {1, 0, 1, 5, 1},
@@ -24,7 +12,14 @@ int Cost[5][5] = {
     {1, 5, 9, 0, 1}, 
     {3, 1, 1, 1, 0}
 };
+int main(){
+    fstream a("./result2/resulta.txt"), b("./result2/resultb.txt");
+    string A, B;
+    char c;
+     while(a.get(c)){
+         if(c == '\n') continue;
 
+<<<<<<< HEAD
 //ans stack
 vector<pair<int, int>> path;
 int last[100010];
@@ -364,18 +359,21 @@ void init(){
     for(int i = 0;i < 5;++i){
         dna_to_id[dna[i]] = i;
         id_to_dna[i] = dna[i];
+=======
+         switch(c){
+             case 'A':A.push_back('1');break;  
+             case 'T':A.push_back('2');break;  
+             case 'G':A.push_back('3');break;  
+             case 'C':A.push_back('4');break;  
+             case '-':A.push_back('0');break;
+         }
+   
+>>>>>>> 6b9111821c49c4b53f919b04c77247e7bc746b29
     }
 
-
-
-    // read data in a
-    fstream fina("Data-P2a.txt");
-    if(!fina){
-        cerr << "cannoot open file Data-P2a!" << endl;
-    }
-    char c;
-    while(fina.get(c)){
+    while(b.get(c)){
          if(c == '\n') continue;
+<<<<<<< HEAD
 
          switch(c){
              case 'A':A.push_back('1');break;  
@@ -392,8 +390,21 @@ void init(){
     fstream finb("Data-P2b.txt");
     if(!finb){
         cerr << "cannoot open file Data-P2b!" << endl;
+=======
+         switch(c){
+             case 'A':B.push_back('1');break;  
+             case 'T':B.push_back('2');break;  
+             case 'G':B.push_back('3');break;  
+             case 'C':B.push_back('4');break;  
+             case '-':B.push_back('0');break;
+         } 
+>>>>>>> 6b9111821c49c4b53f919b04c77247e7bc746b29
     }
+
+    cout << "len of A:" << A.size() << endl;
+    cout << "len of B:" << B.size() << endl;
     
+<<<<<<< HEAD
     while(finb.get(c)){
          if(c == '\n') continue;
          switch(c){
@@ -402,16 +413,16 @@ void init(){
              case 'G':B.push_back('3');break;  
              case 'C':B.push_back('4');break;  
          } 
+=======
+    int p = 0;
+    int same = 0;
+    for(int i = 0;i < A.size();++i){
+        p += Cost[A[i] - '0'][B[i] - '0'];
+        if(A[i] == B[i]) same ++;
+>>>>>>> 6b9111821c49c4b53f919b04c77247e7bc746b29
     }
-    std::cout << "Get DATA of B succeffully---total length: " << B.size() << endl;
-    finb.close();
 
-    lena = A.size() - 1; // since "*" is added 
-    lenb = B.size() - 1;
-
-
-}
-
+<<<<<<< HEAD
 
 
 
@@ -421,6 +432,11 @@ int main(){
     std::cout << "path finded---\n";
     WriteDNA();
     std::cout << "Done ----\n";
+=======
+    cout << "penalty:" << p << endl;
+    cout << "same:" << same << endl;
+>>>>>>> 6b9111821c49c4b53f919b04c77247e7bc746b29
     system("pause");
+    
     return 0;
 }
