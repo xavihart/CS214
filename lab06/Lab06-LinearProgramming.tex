@@ -49,7 +49,7 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 \begin{center}
 \footnotesize{\color{red}$*$ If there is any problem, please contact TA Yiming Liu. }
 
-\footnotesize{\color{blue}$*$ Name:\_\_\_\_\_\_\_\_\_  \quad Student ID:\_\_\_\_\_\_\_\_\_ \quad Email: \_\_\_\_\_\_\_\_\_\_\_\_}
+\footnotesize{\color{blue}$*$ Name: HaotianXue  \quad Student ID:518029101506 \quad Email: xavihart@sjtu.edu.cn}
 \end{center}
 \begin{enumerate}
 
@@ -116,8 +116,113 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
     	
     \end{enumerate}
      
+	
+	\begin{solution}
+	(a) There are 6 variables in this question: the taller smokestacks, filters and better fuels in blast furnace and Open-Health
+	furnace respectively. And we define them as that int the following table:
+	
+	\begin{table}[h]
+    	\centering
+    	\footnotesize
+    	\label{annualcost}
+        \renewcommand\arraystretch{1.1}
+    	\begin{tabular}{lclcl}
+    		\hline
+    		\multicolumn{1}{c}{\textbf{Variable Definition}} & \multicolumn{2}{c}{\textbf{Blast Furnaces}} & \multicolumn{2}{c}{\textbf{Open-Health Furnaces}} \\ \hline
+    		Taller smokestacks                             & \multicolumn{2}{c}{$x_1$}                       & \multicolumn{2}{c}{$x_2$}                           \\
+    		Filters                                        & \multicolumn{2}{c}{$x_3$}                       & \multicolumn{2}{c}{$x_4$}                            \\
+    		Better fuels                                   & \multicolumn{2}{c}{$x_5$}                      & \multicolumn{2}{c}{$x_6$}                            \\ \hline
+    	\end{tabular}
+        
+    \end{table}
+
+	\end{solution}
+	
+
+	then we can get the cost is:
+
+	\begin{equation*}
+    cost  = 8x_1 + 10x_2 + 7x_3 + 6x_4 + 11x_5 + 9x_6
+	\end{equation*}
+
+	whrere $x_i \in [0, 1]$, and the amount of three kind of pollutants they can reduce is:
+	
+	\begin{equation*}
+		\left\{
+		\begin{array}{lcl}
+			Particulates = 12x_1 + 9_x2 + 25x_3 + 20x_4 + 17x_5 + 13x_6 \\
+			SulfurOxides = 35x_1 +  42x_2 + 18x_3  + 31x_4  + 56x_5 + 49x_6 \\
+			Hydrocarbons =  37x_1  + 53x_2  + 28x_3 + 24x_4 + 29x_5 + 20x_6 \\
+		\end{array} \right.
+		\end{equation*}
+
+
+	And the restriction should be::
+	\begin{equation*}
+		\left\{
+		\begin{array}{lcl}
+			Particulates \geq 60 \\
+			SulfurOxides \geq 150 \\
+			Hydrocarbons \geq 125 \\
+		\end{array} \right.
+		\end{equation*}
+
+	Consider the ablove restrictions, the linear programming can be described as:
+	
+	\begin{alignat*}{2}
+		\min\quad & 8x_1 + 10x_2 + 7x_3 + 6x_4 + 11x_5 + 9x_6\\
+		\mbox{s.t.}\quad
+		& x_i \in [0, 1] ~ (i = 1, 2, 3, 4, 5, 6)\\		
+		& 35x_1 +  42x_2 + 18x_3  + 31x_4  + 56x_5 + 49x_6 \geq 150 \\
+		& 37x_1  + 53x_2  + 28x_3 + 24x_4 + 29x_5 + 20x_6 \geq 125  \\
+		& 12x_1 + 9x_2 + 25x_3 + 20x_4 + 17x_5 + 13x_6 \geq 60
+		\end{alignat*}
     
+   
+	(b)The standard form of the linear programming above is:
+
+	\begin{alignat*}{2}
+		\max\quad & -(8x_1 + 10x_2 + 7x_3 + 6x_4 + 11x_5 + 9x_6)\\
+		\mbox{s.t.}\quad
+		& x_i  \leq 1 ~ (i = 1, 2, 3, 4, 5, 6)\\
+		& -35x_1 -  42x_2 - 18x_3  - 31x_4  - 56x_5 - 49x_6 \leq -150\\
+		&  - 37x_1  - 53x_2  - 28x_3 - 24x_4 - 29x_5 - 20x_6 \leq -125\\
+		& -12x_1 - 9x_2  - 25x_3 - 20x_4 - 17x_5 - 13x_6 \leq -60 \\
+		& x_i \geq 0 ~ (i = 1, 2, 3, 4, 5, 6)	\\
+		\end{alignat*}
     
+	(c) The dual-form should be:
+
+	\begin{alignat*}{2}
+		\min\quad & y_1 + y_2 + y_3 + y_4 + y_5 + y_6 -150y_7 - 125y_8 - 60y_9\\
+		\mbox{s.t.}\quad
+		&  y_1 -35y_7 - 37y_8 - 12y_9 \geq -8\\
+		&  y_2 -42y_7 - 53y_8 - 9y_9 \geq -10\\
+		&  y_3 -18y_7 - 28y_8 - 25y_9\geq -7\\
+		&  y_4 -31y_7 - 24y_8 - 20y_9\geq -6\\
+		&  y_5 -56y_7 - 29y_8 - 17y_9\geq -11\\
+		&  y_6 -49y_7 - 20y_8 - 13y_9\geq -9\\
+		&  y_i \geq 0 ~ (i = 1, 2, 3, 4, 5, 6)\\
+		\end{alignat*}
+    
+	(d) In this case, we can interpret satisfing at least two limitations as satisfing exactly two limitations.
+	Refer to Reference14 we can use $M$ as a large number and introduce new binary variables $y_1, y_2, y_3$ to do the LP, so we can 
+	rewrite the LP in (a) as(not a standard form):
+
+	\begin{alignat*}{2}
+		\min\quad & 8x_1 + 10x_2 + 7x_3 + 6x_4 + 11x_5 + 9x_6\\
+		\mbox{s.t.}\quad
+		& x_i \in [0, 1] ~ (i = 1, 2, 3, 4, 5, 6)\\		
+		& 35x_1 +  42x_2 + 18x_3  + 31x_4  + 56x_5 + 49x_6 \geq 150 - My_1 \\
+		& 37x_1  + 53x_2  + 28x_3 + 24x_4 + 29x_5 + 20x_6 \geq 125 - My_2  \\
+		& 12x_1 + 9x_2 + 25x_3 + 20x_4 + 17x_5 + 13x_6 \geq 60 - My_3 \\
+		& y_1 + y_2 + y_3 = 1 \\
+		& y_i \in {0, 1} (i = 1, 2, 3)
+		\end{alignat*}
+	
+	
+
+
 	\item 
 	\textbf{Factory Production. }An engineering factory makes seven products (PROD 1 to PROD 7) on the following machines: four grinders, two vertical drills, three horizontal drills, one borer and two planer. Each product yields a certain contribution to profit (in \pounds/unit). These quantities (in \pounds/unit) together with the unit production times (hours) required on each process are given below. A dash indicates that a product does not require a process.
 	
