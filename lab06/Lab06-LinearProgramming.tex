@@ -9,6 +9,7 @@
 \usepackage{hyperref}
 \usepackage[vlined,ruled,linesnumbered]{algorithm2e}
 \usepackage{array}
+\usepackage{caption}
 \hypersetup{colorlinks=true,linkcolor=black}
 
 \newtheorem{theorem}{Theorem}
@@ -40,8 +41,9 @@
 \renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
 
 \begin{document}
+\renewcommand\tablename{Table}
 \noindent
-
+\captionsetup[figure]{labelfont={bf},labelformat={default},labelsep=period,name={Fig.}}
 %========================================================================
 \noindent\framebox[\linewidth]{\shortstack[c]{
 \Large{\textbf{Lab06-Linear Programming}}\vspace{1mm}\\
@@ -217,7 +219,7 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 		& 37x_1  + 53x_2  + 28x_3 + 24x_4 + 29x_5 + 20x_6 \geq 125 - My_2  \\
 		& 12x_1 + 9x_2 + 25x_3 + 20x_4 + 17x_5 + 13x_6 \geq 60 - My_3 \\
 		& y_1 + y_2 + y_3 = 1 \\
-		& y_i \in {0, 1} (i = 1, 2, 3)
+		& y_i \in \{0, 1\} (i = 1, 2, 3)
 		\end{alignat*}
 	
 	
@@ -299,6 +301,117 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 	\end{enumerate}
 	
 \end{enumerate}
+
+
+\begin{solution}
+	The solutions for factory problem is shown below:
+
+  (a) The source codes for this problem are in "./lab06", in which the .mod file are the model file and the .dat
+  file is the data file.
+   
+  (b) The output of CPLEX is shown in {Fig .1}. And the results are:
+  
+
+     
+  i:Month of maintenance for each machine:
+  
+   
+  \begin{table}[htbp]
+	\scriptsize
+	\centering
+	\renewcommand\arraystretch{1.1}
+	\begin{tabular}{ m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering}}
+		\hline
+		\textbf{Grinder1} & \textbf{Grinder2} & \textbf{Grinder3} & \textbf{Grinder4} & \textbf{v-drill1} &\textbf{v-drill2} \\
+		    April   &  April  & May    &  May    &   February      &   May  \\
+		\hline
+		  \textbf{h-drill1} & \textbf{h-drill2}  & \textbf{h-drill3}  & \textbf{border}  & \textbf{planer1} & \textbf{planer2} \\
+		    May   &  June  & June    &  April    &   May      &   June  \\
+		\hline
+	\end{tabular}
+	\caption{Month to maintenance}
+\end{table}
+
+ 
+
+  ii:
+  
+  A. amount to make:
+
+  \begin{table}[htbp]
+	\scriptsize
+	\centering
+	\renewcommand\arraystretch{1.1}
+	\begin{tabular}{m{0.1\textwidth} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering}}
+		\hline
+		& \textbf{PROD 1} & \textbf{PROD 2} & \textbf{PROD 3} & \textbf{PROD 4} & \textbf{PROD 5} & \textbf{PROD 6} &  \textbf{PROD 7} \\\hline
+		January & 500 & 1000 & 300   & 300  & 800  & 200 & 100 \\
+		February& 600 & 500 & 200   & 0    & 400   & 300 & 150 \\
+		March & 400   & 700 & 0    & 100     & 600   & 400 & 200 \\
+		April & 0   & 0    & 400   & 0   & 0      & 0   &  0\\
+		May & 0       & 100 & 500   & 100   & 1000 & 300 & 0 \\
+		June & 550   & 550 & 150    & 350   & 1150 & 550 & 110 \\
+		\hline
+	\end{tabular}
+	\caption{Amount to make}
+\end{table}
+
+  B: amount to sell:
+
+ 
+  \begin{table}[htbp]
+	\scriptsize
+	\centering
+	\renewcommand\arraystretch{1.1}
+	\begin{tabular}{m{0.1\textwidth} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering}}
+		\hline
+		& \textbf{PROD 1} & \textbf{PROD 2} & \textbf{PROD 3} & \textbf{PROD 4} & \textbf{PROD 5} & \textbf{PROD 6} &  \textbf{PROD 7} \\\hline
+		January & 500 & 1000 & 300   & 300  & 800  & 200 & 100 \\
+		February& 600 & 500 & 200   & 0    & 400   & 300 & 150 \\
+		March & 300   & 600 & 0    & 0     & 500   & 400 & 100 \\
+		April & 100   & 100 & 400   & 100   & 100  & 0   & 100 \\
+		May & 0       & 100 & 500   & 100   & 1000 & 300 & 0 \\
+		June & 500   & 500 & 100    & 300   & 1100 & 500 & 60 \\
+		\hline
+	\end{tabular}
+	\caption{Amount to sell}
+\end{table}
+
+
+  C:amount to hold:
+
+  
+  \begin{table}[htbp]
+	\scriptsize
+	\centering
+	\renewcommand\arraystretch{1.1}
+	\begin{tabular}{m{0.1\textwidth} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering} m{0.07\textwidth}<{\centering}}
+		\hline
+		& \textbf{PROD 1} & \textbf{PROD 2} & \textbf{PROD 3} & \textbf{PROD 4} & \textbf{PROD 5} & \textbf{PROD 6} &  \textbf{PROD 7} \\\hline
+		January &0 &0  & 0  & 0  & 0  &0  &  0\\
+		February& 0& 0 &  0 & 0  &  0 & 0 &  0\\
+		March &100 & 100 & 0  & 100  & 100  & 0 & 100 \\
+		April& 0&  0&  0 &  0 &  0 & 0 &  0\\
+		May & 0&  0&  0 &  0 &  0 & 0 &  0\\
+		June & 50&  50&  50 & 50  & 50  & 50 & 50 \\
+		\hline
+	\end{tabular}
+	\caption{Amount to hold}
+\end{table}
+
+  
+
+
+
+  iii: totall sell profit : 111730
+
+
+  iv: total hold cost : 425
+
+  v: net profit: 111305
+
+
+\end{solution}
 
 
 
