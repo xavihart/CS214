@@ -22,6 +22,11 @@ struct node {
  }edge_list[500001];
 
 
+vector<int> SCC_set[700];   // SCC component set
+vector<pair<int, int>>  Degraded_E;               // new EDGE set for graph (SCC -> vertex), vertex 1, 2, 3, ..., 666
+int SCC_index[100005];
+
+
 int DFN[100005]={0},LOW[100005];
 int heads[100005];
 int visited[100005];
@@ -72,11 +77,15 @@ void tarjan(int s){
         do{
             
             t = DFS_STACK.top();
-            cout << t << " ";
+            //cout << t << " ";
             DFS_STACK.pop();
             visited[t] = 0;   // out ot stack
+
+            SCC_set[num_of_scc].push_back(t);
+            SCC_index[t] = num_of_scc;
+
         }while(t != s);
-    cout << endl;
+ 
     }
 
     return;
@@ -84,6 +93,40 @@ void tarjan(int s){
 
 
 
+
+
+
+void create_new_edge_set(){
+    bool visited[700];
+    bool connected[700][700] = {0};
+    pair<int, int> new_edge;
+    for(int i = 0;i < 100000;++i){
+        int SCC_number = SCC_index[i];
+        //cout << SCC_number << endl;
+        for(int j  = heads[i]; j >= 0; j = edge_list[j].next){
+           int SCC_number_2 = SCC_index[edge_list[j].v];
+           if (SCC_number == SCC_number_2)
+               continue;
+            else{
+                if(connected[SCC_number][SCC_number_2]){
+                    continue;
+                }else{
+                    new_edge = make_pair(SCC_number, SCC_number_2);
+                    Degraded_E.push_back(new_edge);
+                    connected[SCC_number][SCC_number_2] = 1;
+                }
+            }
+        }
+    }
+   
+   ofstream f_out;
+   f_out.open("Degraded_graph.out");
+   for(int i = 0;i < Degraded_E.size();++i){
+       f_out << Degraded_E[i].first << "," << Degraded_E[i].second << "\n";
+   }
+   f_out.close();
+
+}
 
 
 int SCC(int n, vector<pair<int,int>>& edge) {
@@ -111,6 +154,19 @@ int SCC(int n, vector<pair<int,int>>& edge) {
    // for(int i = 0;i < n;++i){
      //   cout << DFN[i] << "  " << LOW[i] << endl;
    // }
+
+// check SCC_set
+   int sum = 0;
+   for(int i = 1; i <= rt;++i){
+       sum += SCC_set[i].size();
+   }
+
+   cout << "check size: " << sum << endl;
+
+   create_new_edge_set();
+
+   cout << "new set created! --- edge numbers: " << Degraded_E.size() << endl;
+
     return rt;
 }
 
@@ -121,7 +177,7 @@ int main()
     vector<pair<int,int>> edge;
     ifstream fin;
     ofstream fout;
-    fin.open("myscc.in");
+    fin.open("SCC.in");
     fin>>n>>m;
     int tmp1,tmp2;
     for(int i=0;i<m;i++)

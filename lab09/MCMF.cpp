@@ -6,6 +6,7 @@
 using namespace std;
 #define maxn 500010
 
+// link-edge 
 struct Node{
 	int ne;
 	int to;
@@ -32,40 +33,53 @@ void add(int u,int v,int capacity,int cost)
 	head[u] = cnt ++;
 }
 
-
-bool spfa(int s,int t)
+// optimized Bellman-Ford : SPFA
+bool spfa(int s,int t) 
 {
-	memset(dis,0x7f,sizeof(dis));
-	memset(flow,0x7f,sizeof(flow));
+
+	// initialization work
+
+	memset(dis,1e9+7,sizeof(dis)); 
+	memset(flow,1e9+7,sizeof(flow));
 	memset(vis,0,sizeof(vis));
-	q.push(s);
-	vis[s] = 1;
-	dis[s] = 0;
-	pre[t] = -1;
+    
+
+	q.push(s);        //start from start point 
+	vis[s] = 1;      // visited
+	dis[s] = 0;      // distanve = 0
+	pre[t] = -1;      
+	
 	while(!q.empty())
 	{
 		int now = q.front();
 		q.pop();
-		vis[now] = 0;
+		vis[now] = 0; 
+
 		for(int i=head[now];i > 0;i=e[i].ne)
 		{
-			int k =e[i].to; 
-			if(e[i].w != 0 && dis[k] > dis[now]+e[i].co)
+			int k =e[i].to;    // adj vetex 
+
+			if(e[i].w != 0 && dis[k] > dis[now]+e[i].co)      // w == 0 -> no edge
 			{
-				dis[k] = dis[now] + e[i].co; // 更新一下最小花费
-				pre[k] = now; // 记录前驱
-				last[k] = i; //与 k 相连的前一条边
-				flow[k] = min(flow[now],e[i].w);
+				dis[k] = dis[now] + e[i].co; 
+				pre[k] = now;  // note down the last vertex
+				last[k] = i;  // note down the last edge
+				flow[k] = min(flow[now],e[i].w);  //update flow to the min(e[s], ..., e[t])
+				
+				
 				if(!vis[k])
 				{
 					vis[k] = 1;
 					q.push(k);
 				}
+
+
 			}
 		}
 	}
-	return pre[t] != -1;// 判断能否达到汇点
+	return pre[t] != -1;   // if 0, there is no path
 }
+
 void MCMF()
 {
 	while(spfa(s,t))
@@ -75,11 +89,14 @@ void MCMF()
 		mincost += flow[t]*dis[t];
 		while(now!=s)
 		{
-			e[last[now]].w -= flow[t];
-			e[last[now]^1].w += flow[t];
+			e[last[now]].w -= flow[t];  // f(a, b) - bottleneck flow
+			e[last[now]^1].w += flow[t]; // f(b, a) + bottleneck flow
+
 			now = pre[now];
 		}
 	}
+
+	cout << "maxflow " << maxflow << " " << "mincost " << mincost << endl;
 }
 int main()
 {
