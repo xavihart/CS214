@@ -288,6 +288,79 @@ section there are some subsections, and I will ommit some of the subsections sin
 \item Assume there's a Turing Machine $M$ using alphabet $\Gamma :\{ \triangleright, \Box, a, b, \cdots, z\}$. We can simulate $M$ by a Turing Machine $\tilde{M}$ using alphabet $\tilde{\Gamma }:\{ \triangleright, \Box, 0, 1\}$. Please transform the instruction $\langle q, i \rangle \rightarrow \langle q',j, R\rangle$ in $M$ into its corresponding form in $\tilde{M}$.
 
 
+\begin{solution}
+    The solutions for this problem is as following.
+
+   We decode $a, b, ..., z$ by using 5 bits of data in order from $00001$ to $11010$, and in the case referred to $i$ and $j$, we can decode them as 
+   $01001$ and $01010$ respectively.
+
+	We have two kind of states in the solution and they are:
+
+	\begin{itemize}
+		\item \textbf{$q_{read(x,y,z)}$}: it is used to read the five bits to redecode the 5-bits, where $x$ represents the number of bit read and $x\in \{5, 4, 3, 2, 1\}$; $y$ represents the value read now and $y\in \{1,2...,26\}$, $z$ is used
+		to determine the current situation and in this case we name state $q$ as $z=1$ and  $q^{'}$ as $z=2$.
+
+		\item \textbf{$q_{retreat(x,y, z)}$}: make state change and retreat to the beginning of the 5-bits to wait for write operation. $x$ is used to represent the current position.
+		
+		\item \textbf{$q_{write(x,y,z)}$}:  rewrite the 5-bits, in this example we should write them into $01010$.
+	\end{itemize}
+
+
+	$\tilde{M}$ can be divided into three parts accordingly:
+
+	
+	\begin{itemize}
+		\item \textbf{Read}: 
+		This part can be used in all conditions(not restricted to $i,j,q,q^{'}$ in this case):
+
+		\begin{equation*}
+					\langle q_{read(x,y,z)}, p \rangle \rightarrow \langle q_{read(x,y + p\times 2^{x-1},z)}, p,   R\rangle
+		\end{equation*} 
+		
+		$z$ is in $\{5,4,3,2\}$, when $z$ becomes $1$, we read the last bit and to transformation, in this case we transform$z$ from $1$ to $2$: 
+
+		\begin{equation*}
+			\langle q_{read(1,y,1)}, p \rangle \rightarrow \langle q_{retreat(1,y + p ,2)}, p,   S\rangle
+        \end{equation*} 
+
+		\item \textbf{Retreat}: 
+		In this part we move back to the first bit, which is also of universal use:
+
+
+		\begin{equation*}
+					\langle q_{retreat(x,y,z)}, p \rangle \rightarrow \langle q_{retreat(x - 1,y,z)}, p,   L\rangle
+		\end{equation*} 
+
+		where $x$ is in $\{5, 4, 3, 2\}$, and when $x$ becomes $1$, we reach the beginning of $i$, we change state to $write$:
+
+		\begin{equation*}
+			\langle q_{retreat(1,y,z)}, p \rangle \rightarrow \langle q_{write(1,y,z)}, p,   S\rangle
+        \end{equation*} 
+		
+		\item \textbf{Write}:
+		 
+		Then we write the five bits into $01010$, to make it more general we define $01010(j)$ as $a_1 a_2 a_3 a_4 a_5$ and $01001(i)$ as $b_1 b_2 b_3 b_4 b_5$:
+
+		\begin{equation*}
+			\langle q_{retreat(i,y,2)}, b_{i} \rangle \rightarrow \langle q_{write(i + 1,y,2)}, a_{i},   R\rangle
+		\end{equation*} 
+		
+		where we have $i$ is in $\{1, 2, 3, 4\}$, and in this case $y$ is $9$. When $i$ is $5$, we write the last bit, turn value into $0$ and then  change state to read the next word:
+
+		
+		\begin{equation*}
+			\langle q_{retreat(5,y,2)}, b_{i} \rangle \rightarrow \langle q_{read(i + 1,0,2)}, a_{i},   R\rangle
+		\end{equation*} 
+
+	\end{itemize}
+	
+\end{solution}
+
+
+
+
+
+
 \item \textbf{Wireless Data Broadcast System.}
 In a Wireless Data Broadcast System (WDBS), data items are repeatedly broadcasted in cycle on different channels. Denote $D = \{d_1, d_2,\cdots, d_k\}$ as data items, each $d_i$ with length $l_i$ (as time units), and $\mathbf{C}=\{C_1, C_2, \cdots, C_n\}$ as broadcasting channels. Fig. illustrates a WDBS with 25 data items and 4 channels. Once a channel finishes broadcasting current cycle, it will repeat these data again as a new cycle. E.g., a possible broadcasting sequence of $C_1$ could be \{$d_6$, $d_{12}$, $d_1$, $d_{18}$, $d_7$, $d_6$, $d_{12}$, $d_1$, $d_{18}$, $d_7$, $\cdots$\}
 
@@ -321,6 +394,93 @@ Once we want to minimize two conflictive objectives simultaneously, we have thre
 	\item If we set dimensional parameters $\alpha$ to switch number, and $\beta$ to access latency, we can combine two objectives together linearly as a new concept ``cost''. Please define the Minimum Cost Data Retrieval Problem (MCDR, Version 3) correspondingly.
 	\item Please give the decision versions of sub-questions (a), (b) and (c).
 \end{enumerate}
+
+
+
+\begin{solution}
+	The solutions for this problem is as follows:
+
+	We first try to make a more mathematical abstraction of this problem:
+
+	We have $n$ channels $C_1, C_2, ... C_n$ and each one is made up of certain circulating  block of data:
+	the $i_th$ data item in $C_j$ is $item_{ji}$. The requests is $D = \{d_1, d_2, ..., d_k\}$, what we try to find 
+	is a possible way to get the data we want from the channels in a specific sequence: $D^{'} = \{ d_1^{'}, d_2^{'}, ..., d_k^{'} \}$.
+	
+	Since we can fetch data from different channels in different time , we add two subindexs to define  when and where and data is fetched, that is :
+	$D_{s} = {d_1^{t_1, c_1}, d_2^{t_2, c_2}, ..., d_k^{t_k, c_k}}$, and we have additional requirements to make it more feasible:
+
+	\begin{itemize}
+		\item \textbf{Time sequence}: $t_i < t_j$ $(i < j)$
+		\item \textbf{Switch constraint}: if $c_i$ is not equal to $c_{i + 1}$, then $t_i + 1 < t_{i + 1}$
+		\item \textbf{Data accuracy}: $d_{c_i t_i} = item_{c_i t_i}$
+		\item \textbf{Data integrity}: $D_{s}$ is a permutation of $D$
+	\end{itemize}
+
+
+	and we can calcualte the access latency(\textbf{AL}) and the switch numbers(\textbf{SN}) like this:
+	
+	 \begin{equation*}
+		 AL = t_k - t_1
+	 \end{equation*}
+
+	 \begin{equation*}
+		SN = \sum_{i = 1}^{k-1} \mathbb{I}(c_i, c_{i + 1})
+	\end{equation*}
+
+	where $\mathbb{I}(a, b) = 1$ when $a=b$, otherwise it is $0$.
+
+	(a) 
+	 We define the cost for feasible solution $x$ as $Cost(x) =AL(x) +  hSN(x)$ and the search problem can be described like this:
+
+	 \begin{itemize}
+		\item \textbf{Solution set:} X, $D_s \in X$
+        \item \textbf{Instance:} solution $s$ with the order $D_s$
+        \item \textbf{Feasible solutions:} $s_x \in X$
+        \item \textbf{Algorithem }: search for the $s$ , s.t. $Cost(s) = min(Cost(s_x))$
+	 \end{itemize}
+
+
+
+	 (b) 
+	 We define the cost for feasible solution $x$ as $Cost(x) =tAL(x) +  SN(x)$ and the search problem can be described like this:
+
+	 \begin{itemize}
+		\item \textbf{Solution set:} X, $D_s \in X$
+        \item \textbf{Instance:} solution $s$ with the order $D_s$
+        \item \textbf{Feasible solutions:} $s_x \in X$
+        \item \textbf{Algorithem }: search for the $s$ , s.t. $Cost(s) = min(Cost(s_x))$
+	 \end{itemize}
+
+	 (c) 
+	 We define the cost for feasible solution $x$ as $Cost(x) =\alpha AL(x) +  \beta SN(x)$ and the search problem can be described like this:
+
+	 \begin{itemize}
+		\item \textbf{Solution set:} X, $D_s \in X$
+        \item \textbf{Instance:} solution $s$ with the order $D_s$
+        \item \textbf{Feasible solutions:} $s_x \in X$
+        \item \textbf{Algorithem }: search for the $s$ , s.t. $Cost(s) = min(Cost(s_x))$
+	 \end{itemize}
+
+	
+	(d)
+
+	(a), (b), (c) differ in the definition of cost, so we generalize the cost to describe the Decision Porbelm, which can be used to 
+	transform all the three questions:
+	
+
+
+\begin{itemize}
+		\item \textbf{Solution set:} X, $D_s \in X$ iff $Cost(D_s) < k$
+        \item \textbf{Instance:} solution $s$ with the order $D_s$
+        \item \textbf{Algorithem A}: $A(s) = yes$ iff $s \in X$
+	 \end{itemize}
+
+
+
+\end{solution}
+
+
+
 \end{enumerate}
 
 %========================================================================
