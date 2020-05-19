@@ -49,7 +49,7 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 \begin{center}
 \footnotesize{\color{red}$*$ If there is any problem, please contact TA Shuodian Yu. }
 
-\footnotesize{\color{blue}$*$ Name:\_\_\_\_\_\_\_\_\_  \quad Student ID:\_\_\_\_\_\_\_\_\_ \quad Email: \_\_\_\_\_\_\_\_\_\_\_\_}
+\footnotesize{\color{blue}$*$ Name:HaotianXue \quad Student ID:518021910506 \quad Email:xavhiart@sjtu.edu.cn}
 \end{center}
 \begin{enumerate}
 	\item What is the ``certificate'' and ``certifier'' for the following problems?
@@ -58,28 +58,84 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 		\item \emph{SET PACKING}: Given a finite set $U$, a positive integer $k$ and several subsets $U_1, U_2, \ldots, U_m$ of $U$, is there $k$ or more subsets which are disjoint with each other?
 		\item \emph{STEINER TREE IN GRAPHS}: Given a graph $G=(V,E)$, a weight $w(e)\in Z_0^{+}$ for each $e\in E$, a subset $R \subset V$, and a positive integer bound $B$, is there a subtree of $G$ that includes all the vertices of $R$ and such that the sum of the weights of the edges in the subtree is no more than $B$.
 	\end{enumerate}
-	%    \begin{solution}
-%        Uncomment this block to write your proof.
-%    \end{solution}
+	   
+	\begin{solution}
+		The certificates and certifiers for the three problems are as follows:
+		
+		(a)\textbf{ZERO-ONE INTEGER PROGRAMMING}
+		  \begin{itemize}
+			  \item Certificate: a binary $n$-vector $x$.
+			  \item Certifier: Check if $Ax\leq b$.
+		  \end{itemize}
+
+		(b)\textbf{SET PACKING}
+		\begin{itemize}
+			\item Certificate: $k$ subsets $U_{o_i} \in \{U_i|i \in \{1,2,3...,m\}\}(i=1, 2, ..., k)$ 
+			\item Certifier: Check if the $k$ subsets are disjoint with each other.
+		\end{itemize}
+
+		(c)\textbf{STEINER TREE IN GRAPHS}
+		\begin{itemize}
+			\item Certificate: Substree $T=(V_t, E_t)$ of $G$ which satisfies: $R \subset V_t$
+			\item Certifier: Check if the sum of weights in $T$ is no more than $B$.
+		\end{itemize}
+
+
+    \end{solution}
 
 	\item Algorithm class is a democratic class. Denote class as a finite set $S$ containing every students. Now students decided to raise a student union $S' \subseteq S$ with $|S'|\leq K$ .
 	
 	As for the members of the union, there are many different opinions. An opinion is a set $S_o\subseteq S$. Note that number of opinions has nothing to do with number of students.
 	
 	The question is whether there exists such student union $S' \subseteq S$ with $|S'|\leq K$, that $S'$ contains at least one element from each opinion. We call this problem \emph{ELECTION} problem, prove that it is NP-complete.
-	%    \begin{solution}
-%        Uncomment this block to write your proof.
-%    \end{solution}
+	
+	\begin{solution}
+		We can actually reduce the VERTEX-COVER problem to ELECTION problem.
+		
+		For a VERTEX-COVER instance, we have $G=(V,E)$ and we check if there is a set of vertices that can cover all the edges in $G$. 
+	We now regard each edge as an opinion in ELECTION problem, so we have $E=\{e_1, e_2, ..., e_k\}$ functioned to $O = \{S_{o_1}, S_{o_2}, ..., S_{o_k}\}$, where $e_i$ is related to $S_{o_i}$.
+	For $e_i = (v_a, v_b)$, we have $S_{o_i} = \{v_a, v_b\}$.  And we can easily prove that $S$ is actually functioned to $V$ respectively, that is, each node in graph is related to one student in the ELECTION problem respectively.
+
+	 Then choose a vertex covering set from $V$ is equivalent to choosing some elements in $S$ which havs common elements with each $S_{o_i}$. That means the choosed set of vertices $S^{'}$ 
+	 satisfies the requirements of ELECTION problem.
+
+	 So we can conclude that the VERTEX-COVER is reduced to ELECTION problem. Since the former one is NPC, then we have ELECTION problem is  NPC.
+	
+
+
+    \end{solution}
 
 	\item Not-All-Equal Satisfiability (NAE-SAT) is an extension of SAT where every clause has at least one true literal and at least one false one. NAE-$3$-SAT is the special case where each clause has exactly $3$ literals. Prove that NAE-$3$-SAT is NP-complete. (Hint : reduce $3$-SAT to NAE-$k$-SAT for some $k > 3$ at first)
-	%    \begin{proof}
-%        Uncomment this block to write your proof.
-%    \end{proof}
+	\begin{proof}
+   
+	 We will prove that : $3$-SAT $\leq_{p}$ NAE-$4$-SAT $\leq_{p}$ NAE-$3$-SAT.
+	 
+	 \begin{itemize}
+		 \item $3$-SAT $\leq_{p}$ NAE-$4$-SAT
+		  For a clause $C$ = ($x_1 \lor  x_2 \lor x_3$) in one instance of $3$-SAT, we transfer if to $C^{'}=(x^{'}_1 \lor  x^{'}_2 \lor  x^{'}_3 \lor w)$ and we have 
+		  $x_i = \sim (x^{'}_i == w)$. So if  $C$ is true then we have at least one $x_i \neq w$, which means $C^{'}$ is satisfied. Otherwise, if $C$ is not true, then all the 
+		  $x_i$ is same with $w$, which means the $C^{'}$ is not satisfied.
+
+		 \item NAE-$4$-SAT $\leq_{p}$ NAE-$3$-SAT
+		 
+		 For an instance in the NAE-$4$-SAT : $C = (x_1 \lor  x_2 \lor x_3 \lor x_4)$ we can break it into $(x_1 \lor x_2 \lor w) \land (\bar{w} \lor x_2 \lor x_4)$.
+
+		 If there are two different elements in $C$, if they are in the same clause in NAE-$3$-SAT, we set $w$ to make the other clause satisfied. Otherwise we just set $w$ to make $w$ and $\bar{w}$ different from 
+	 the two different elements in $C$ respectively.
+
+	 If there are no different elements in $C$, it is quite intuitive to see that neither clause in NAE-$3$-SAT can be satisfied.
+		\end{itemize}
+
+		So considering $3$-SAT is NPC and the two reductions above, we can conclude that NAE-$3$-SAT is NPC.
+
+
+    \end{proof}
 
 	\item In the Lab10, we have introduced Minimum Constraint Data Retrieval Problem (MCDR). Prove that MCDR (Version $1$ or $2$) is NP-complete. (Hint : reduce from VERTEX-COVER or $3$-SAT)
-	%    \begin{proof}
-%        Uncomment this block to write your proof.
-%    \end{proof}
+	
+	\begin{proof}
+   
+ \end{proof}
 
 \end{enumerate}
 
