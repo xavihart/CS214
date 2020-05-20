@@ -9,6 +9,7 @@
 \usepackage{hyperref}
 \usepackage[vlined,ruled,linesnumbered]{algorithm2e}
 \usepackage{array}
+\usepackage{caption}
 \hypersetup{colorlinks=true,linkcolor=black}
 
 \newtheorem{theorem}{Theorem}
@@ -41,6 +42,7 @@
 
 \begin{document}
 \noindent
+\captionsetup[figure]{labelfont={bf},labelformat={default},labelsep=period,name={Fig.}}
 
 %========================================================================
 \noindent\framebox[\linewidth]{\shortstack[c]{
@@ -134,9 +136,60 @@ CS214-Algorithm and Complexity, Xiaofeng Gao, Spring 2020.}}
 	\item In the Lab10, we have introduced Minimum Constraint Data Retrieval Problem (MCDR). Prove that MCDR (Version $1$ or $2$) is NP-complete. (Hint : reduce from VERTEX-COVER or $3$-SAT)
 	
 	\begin{proof}
-   
- \end{proof}
+    We will prove that the VERTEX-COVER problem can be reduced to the MCDR problem.
+	 
+	First let's define some necessary annotations: 
+	
+	\begin{itemize}
+		\item In the VERTEX-COVER problem we have non-directed graph $G = (V, E)$ and we try to define if we can find a vertex set $S \subset V$ and $|S| \leq k$.
+	And $S$ can cover all the edges in $E$.
 
+	   \item We define that the dataset is $D = \{ d_i\}$ and channels are in $C = \{c_i\}$. We have the switches $SW$ and access latency $AL$. And the decision version of $MCDR$ in this case is 
+	   defined as : if we can find some way to access all data in $D$, such that $SW < SW_0$ and $LA < LA_0$, where $SW_0, LA_0$ are constant restrictions.
+
+	\end{itemize}
+
+	Then we find one instance for $VERTEX-COVER$as$G = (V,E)$ and $k$. Then we make up the MCDR model like this:
+
+	\begin{itemize}
+		\item $C = \{c_1, c_2, ..., c_ {|V|}\} \cup \{ s_1, s_2, ..., s_k\}$, where $c_i$ is related to each node $v_i$ in $V$ and $s_i$ is
+		served as the starting points.
+
+		\item The dataset in $MCDR$ are $D = {d_1, d_2, ..., d_{|E|+k}}$, where each data item $d_i(i\in\{1, 2, .., |E|\})$ is related to one edge in $G$. And for each edge $e_{uv}$ we place two data items into  
+	channel $c_u$ and $c_v$ just like push data into stacks in any order.
+		
+	    \item Also for $d_j(j \in \{|E|+1, .., |E|+k\})$ in $D$, it is placed in the first block in $s_j$.
+	
+		\item We have $2$ empty blocks in each channel for switching, which can be referred to Fig.1. We set the length of all channels to be the same, and the length is noted as $L$, which is equal to $M + 3$ and $M$ is the max degree among all the vertices.
+	\end{itemize}
+		 
+	One example for the model reductions is showed in Fig .1.
+
+	\begin{lemma}
+		There is a subset of $V$ with size no more than $k$ which satisfies the vertex-cover if and only if there is a way to fetch data items in $D$ which can satisfiy the restrictions 
+		with $(LA, SW) = (kL, 2k-1)$ in $MCDR$ problem.
+	\end{lemma}
+	
+	\begin{proof}
+		(1) Firstly, if there is a subset $S$ to cover all the edges in $E$, we only need to choose the corresponding channels $C_{o_1}, C_{o_2}, ..., C_{o_k}$ for those vertices. And we can fetch all the dataitems in these $k$ channels.
+		To do this, we start from $s_1$ and go to $C_{o_1}$ and  wait for all the data we want, then we switch from $C_{o_1}$ to $s_2$, then from $s_2$ to $C_{o_2}$, waiting for data in $C_{o_2}$. We repeat like this until all the $k$ channels are tranversed.		
+		We can see that in this process, for each channel except the starting channel we have $2$ switches. So the $SW = 2(k-1) + 1 = 2k- 1$ And the time latency can be calculated as $kL$ since we only stay in 
+		one channel choosed for one cycle. So we can see that the $MCDR$ restriction is satisfied.
+
+		(2) Then, if we have a satisfied approach to fetch data in $MCDR$ problem. Since we can must fetch data in $s_j(i=1, 2, ..., k)$, then we must have at least $k-1$ switches. The last $k$ switches are used to 
+		move between channels , which means we can at moset fetch in $k$ channels. That also means we choose at most $k$ vertices in $G$. So we can get a satisfied vertex set with size on more than $k$ to cover all the edges.
+	\end{proof}
+	
+	According to Lemma 1, we can see that VERTEX-COVER is reduced to MCDR. Since VERTEX-COVER is NPC, we can conclude that the MCDR is NPC.
+	
+
+	\begin{figure}
+
+    \includegraphics[scale=0.6]{MCDR.pdf}
+    \caption{Reduction from VERTEX-COVER to MCDR}
+
+	\end{figure}
+\end{proof}
 \end{enumerate}
 
 \textbf{Remark:} Please include your .pdf, .tex files for uploading with standard file names.
