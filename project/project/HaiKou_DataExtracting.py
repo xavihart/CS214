@@ -19,6 +19,8 @@ for f in file_list:
             continue
         l = l[-7:-3]  # only need four coloumns of data
         l = [float(i) for i in l]
+        if l[1] > 25:
+            continue
         data.append(l)
 print(len(data))
 

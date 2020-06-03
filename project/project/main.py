@@ -21,8 +21,21 @@ if city == "chengdu":
 elif city == "haikou":
     data = pd.read_csv("./data_haikou/order.csv")
 
-Despoint, Deppoint = GridExplore(data, grid, num_des, k=2)
+
+Despoint, Deppoint = GridExplore(data, grid, num_des, k=2, city=city)
 
 print(Deppoint)
-
 print(Despoint)
+
+DesCSV = pd.DataFrame(Despoint)
+DesCSV.rename(columns={0: "LonDrop", 1: "LatDrop", 2:"NumOrder"}, inplace=True)
+DesCSV.to_csv("./results/pointChoose/{}_{}.csv".format(city, grid))
+
+f = open("./results/pointChoose/points_{}.txt".format(city), "w")
+f.write(str(Deppoint) + "\n")
+f.write(str(Despoint))
+f.close()
+
+
+
+
