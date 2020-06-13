@@ -1,0 +1,483 @@
+L=20----------------------------------------------------------------------------------------------------------
+Route for vehicle 0:
+ 0 Drop off(0) -> 7 Drop off(14) -> 14 Drop off(2) -> 17 Drop off(4) -> 0 Drop off(0)
+Distance of the route: 21.62km
+Passengers of the route: 20
+
+Route for vehicle 1:
+ 0 Drop off(0) -> 12 Drop off(7) -> 24 Drop off(5) -> 26 Drop off(5) -> 17 Drop off(3) -> 0 Drop off(0)
+Distance of the route: 32.55km
+Passengers of the route: 20
+
+Route for vehicle 2:
+ 0 Drop off(0) -> 10 Drop off(14) -> 12 Drop off(6) -> 0 Drop off(0)
+Distance of the route: 17.37km
+Passengers of the route: 20
+
+Route for vehicle 3:
+ 0 Drop off(0) -> 30 Drop off(6) -> 21 Drop off(6) -> 19 Drop off(6) -> 0 Drop off(0)
+Distance of the route: 36.27km
+Passengers of the route: 18
+
+Route for vehicle 4:
+ 0 Drop off(0) -> 7 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 11.84km
+Passengers of the route: 20
+
+Route for vehicle 5:
+ 0 Drop off(0) -> 11 Drop off(2) -> 25 Drop off(5) -> 27 Drop off(7) -> 29 Drop off(5) -> 22 Drop off(1) -> 0 Drop off(0)
+Distance of the route: 28.81km
+Passengers of the route: 20
+
+Route for vehicle 6:
+ 0 Drop off(0) -> 6 Drop off(12) -> 14 Drop off(8) -> 0 Drop off(0)
+Distance of the route: 14.91km
+Passengers of the route: 20
+
+Route for vehicle 7:
+ 0 Drop off(0) -> 6 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 10.6km
+Passengers of the route: 20
+
+Route for vehicle 8:
+ 0 Drop off(0) -> 6 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 10.6km
+Passengers of the route: 20
+
+Route for vehicle 9:
+ 0 Drop off(0) -> 15 Drop off(8) -> 28 Drop off(5) -> 23 Drop off(2) -> 22 Drop off(5) -> 0 Drop off(0)
+Distance of the route: 27.2km
+Passengers of the route: 20
+
+Route for vehicle 10:
+ 0 Drop off(0) -> 5 Drop off(8) -> 11 Drop off(12) -> 0 Drop off(0)
+Distance of the route: 12.71km
+Passengers of the route: 20
+
+Route for vehicle 11:
+ 0 Drop off(0) -> 5 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 8.84km
+Passengers of the route: 20
+
+Route for vehicle 12:
+ 0 Drop off(0) -> 5 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 8.84km
+Passengers of the route: 20
+
+Route for vehicle 13:
+ 0 Drop off(0) -> 5 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 8.84km
+Passengers of the route: 20
+
+Route for vehicle 14:
+ 0 Drop off(0) -> 13 Drop off(10) -> 16 Drop off(7) -> 23 Drop off(3) -> 0 Drop off(0)
+Distance of the route: 18.33km
+Passengers of the route: 20
+
+Route for vehicle 15:
+ 0 Drop off(0) -> 3 Drop off(4) -> 6 Drop off(16) -> 0 Drop off(0)
+Distance of the route: 11.98km
+Passengers of the route: 20
+
+Route for vehicle 16:
+ 0 Drop off(0) -> 3 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 8.4km
+Passengers of the route: 20
+
+Route for vehicle 17:
+ 0 Drop off(0) -> 3 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 8.4km
+Passengers of the route: 20
+
+Route for vehicle 18:
+ 0 Drop off(0) -> 3 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 8.4km
+Passengers of the route: 20
+
+Route for vehicle 19:
+ 0 Drop off(0) -> 3 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 8.4km
+Passengers of the route: 20
+
+Route for vehicle 20:
+ 0 Drop off(0) -> 9 Drop off(5) -> 20 Drop off(6) -> 18 Drop off(6) -> 30 Drop off(3) -> 0 Drop off(0)
+Distance of the route: 22.94km
+Passengers of the route: 20
+
+Route for vehicle 21:
+ 0 Drop off(0) -> 2 Drop off(11) -> 7 Drop off(9) -> 0 Drop off(0)
+Distance of the route: 11.89km
+Passengers of the route: 20
+
+Route for vehicle 22:
+ 0 Drop off(0) -> 2 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 20
+
+Route for vehicle 23:
+ 0 Drop off(0) -> 2 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 20
+
+Route for vehicle 24:
+ 0 Drop off(0) -> 2 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 20
+
+Route for vehicle 25:
+ 0 Drop off(0) -> 2 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 20
+
+Route for vehicle 26:
+ 0 Drop off(0) -> 8 Drop off(4) -> 9 Drop off(16) -> 0 Drop off(0)
+Distance of the route: 8.87km
+Passengers of the route: 20
+
+Route for vehicle 27:
+ 0 Drop off(0) -> 8 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 4.76km
+Passengers of the route: 20
+
+Route for vehicle 28:
+ 0 Drop off(0) -> 4 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 3.8km
+Passengers of the route: 20
+
+Route for vehicle 29:
+ 0 Drop off(0) -> 4 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 3.8km
+Passengers of the route: 20
+
+Route for vehicle 30:
+ 0 Drop off(0) -> 4 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 3.8km
+Passengers of the route: 20
+
+Route for vehicle 31:
+ 0 Drop off(0) -> 4 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 3.8km
+Passengers of the route: 20
+
+Route for vehicle 32:
+ 0 Drop off(0) -> 1 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 20
+
+Route for vehicle 33:
+ 0 Drop off(0) -> 1 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 20
+
+Route for vehicle 34:
+ 0 Drop off(0) -> 1 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 20
+
+Route for vehicle 35:
+ 0 Drop off(0) -> 1 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 20
+
+Route for vehicle 36:
+ 0 Drop off(0) -> 1 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 20
+
+Total distance of all routes: 419.69km
+Total passengers of all routes: 738
+
+Solver status:  1
+
+Total fares: 7386; Total cost: 8895; Net profit: -1509.
+
+L=25-------------------------------------------------------------------------------------------------
+Route for vehicle 0:
+ 0 Drop off(0) -> 17 Drop off(7) -> 26 Drop off(5) -> 24 Drop off(5) -> 12 Drop off(8) -> 0 Drop off(0)
+Distance of the route: 32.55km
+Passengers of the route: 25
+
+Route for vehicle 1:
+ 0 Drop off(0) -> 3 Drop off(9) -> 10 Drop off(14) -> 0 Drop off(0)
+Distance of the route: 14.8km
+Passengers of the route: 23
+
+Route for vehicle 2:
+ 0 Drop off(0) -> 9 Drop off(21) -> 0 Drop off(0)
+Distance of the route: 8.02km
+Passengers of the route: 21
+
+Route for vehicle 3:
+ 0 Drop off(0) -> 7 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 11.84km
+Passengers of the route: 25
+
+Route for vehicle 4:
+ 0 Drop off(0) -> 11 Drop off(3) -> 25 Drop off(5) -> 29 Drop off(5) -> 27 Drop off(7) -> 12 Drop off(5) -> 0 Drop off(0)
+Distance of the route: 29.71km
+Passengers of the route: 25
+
+Route for vehicle 5:
+ 0 Drop off(0) -> 6 Drop off(2) -> 14 Drop off(10) -> 19 Drop off(6) -> 21 Drop off(6) -> 2 Drop off(1) -> 0 Drop off(0)
+Distance of the route: 24.31km
+Passengers of the route: 25
+
+Route for vehicle 6:
+ 0 Drop off(0) -> 6 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 10.6km
+Passengers of the route: 25
+
+Route for vehicle 7:
+ 0 Drop off(0) -> 6 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 10.6km
+Passengers of the route: 25
+
+Route for vehicle 8:
+ 0 Drop off(0) -> 15 Drop off(8) -> 28 Drop off(5) -> 23 Drop off(2) -> 22 Drop off(6) -> 11 Drop off(4) -> 0 Drop off(0)
+Distance of the route: 27.72km
+Passengers of the route: 25
+
+Route for vehicle 9:
+ 0 Drop off(0) -> 5 Drop off(18) -> 11 Drop off(7) -> 0 Drop off(0)
+Distance of the route: 12.71km
+Passengers of the route: 25
+
+Route for vehicle 10:
+ 0 Drop off(0) -> 5 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 8.84km
+Passengers of the route: 25
+
+Route for vehicle 11:
+ 0 Drop off(0) -> 5 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 8.84km
+Passengers of the route: 25
+
+Route for vehicle 12:
+ 0 Drop off(0) -> 7 Drop off(8) -> 6 Drop off(16) -> 0 Drop off(0)
+Distance of the route: 15.2km
+Passengers of the route: 24
+
+Route for vehicle 13:
+ 0 Drop off(0) -> 3 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 8.4km
+Passengers of the route: 25
+
+Route for vehicle 14:
+ 0 Drop off(0) -> 3 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 8.4km
+Passengers of the route: 25
+
+Route for vehicle 15:
+ 0 Drop off(0) -> 3 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 8.4km
+Passengers of the route: 25
+
+Route for vehicle 16:
+ 0 Drop off(0) -> 30 Drop off(9) -> 18 Drop off(6) -> 20 Drop off(6) -> 0 Drop off(0)
+Distance of the route: 22.85km
+Passengers of the route: 21
+
+Route for vehicle 17:
+ 0 Drop off(0) -> 2 Drop off(15) -> 7 Drop off(10) -> 0 Drop off(0)
+Distance of the route: 11.89km
+Passengers of the route: 25
+
+Route for vehicle 18:
+ 0 Drop off(0) -> 2 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 25
+
+Route for vehicle 19:
+ 0 Drop off(0) -> 2 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 25
+
+Route for vehicle 20:
+ 0 Drop off(0) -> 2 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 25
+
+Route for vehicle 21:
+ 0 Drop off(0) -> 8 Drop off(24) -> 0 Drop off(0)
+Distance of the route: 4.76km
+Passengers of the route: 24
+
+Route for vehicle 22:
+ 0 Drop off(0) -> 4 Drop off(5) -> 13 Drop off(10) -> 16 Drop off(7) -> 23 Drop off(3) -> 0 Drop off(0)
+Distance of the route: 18.48km
+Passengers of the route: 25
+
+Route for vehicle 23:
+ 0 Drop off(0) -> 4 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 3.8km
+Passengers of the route: 25
+
+Route for vehicle 24:
+ 0 Drop off(0) -> 4 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 3.8km
+Passengers of the route: 25
+
+Route for vehicle 25:
+ 0 Drop off(0) -> 4 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 3.8km
+Passengers of the route: 25
+
+Route for vehicle 26:
+ 0 Drop off(0) -> 1 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 25
+
+Route for vehicle 27:
+ 0 Drop off(0) -> 1 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 25
+
+Route for vehicle 28:
+ 0 Drop off(0) -> 1 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 25
+
+Route for vehicle 29:
+ 0 Drop off(0) -> 1 Drop off(25) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 25
+
+Total distance of all routes: 341.82km
+Total passengers of all routes: 738
+
+Solver status:  1
+
+Total fares: 7386; Total cost: 7215; Net profit: 170.
+
+L=30----------------------------------------------------------------------------------------
+Route for vehicle 0:
+ 0 Drop off(0) -> 14 Drop off(10) -> 17 Drop off(3) -> 21 Drop off(6) -> 19 Drop off(6) -> 7 Drop off(3) -> 0 Drop off(0)
+Distance of the route: 28.65km
+Passengers of the route: 28
+
+Route for vehicle 1:
+ 0 Drop off(0) -> 6 Drop off(2) -> 17 Drop off(4) -> 26 Drop off(5) -> 24 Drop off(5) -> 27 Drop off(7) -> 29 Drop off(5) -> 0 Drop off(0)
+Distance of the route: 42.06km
+Passengers of the route: 28
+
+Route for vehicle 2:
+ 0 Drop off(0) -> 12 Drop off(13) -> 10 Drop off(14) -> 0 Drop off(0)
+Distance of the route: 17.37km
+Passengers of the route: 27
+
+Route for vehicle 3:
+ 0 Drop off(0) -> 6 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 10.6km
+Passengers of the route: 30
+
+Route for vehicle 4:
+ 0 Drop off(0) -> 6 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 10.6km
+Passengers of the route: 30
+
+Route for vehicle 5:
+ 0 Drop off(0) -> 15 Drop off(8) -> 28 Drop off(5) -> 30 Drop off(6) -> 7 Drop off(11) -> 0 Drop off(0)
+Distance of the route: 33.34km
+Passengers of the route: 30
+
+Route for vehicle 6:
+ 0 Drop off(0) -> 4 Drop off(28) -> 0 Drop off(0)
+Distance of the route: 3.8km
+Passengers of the route: 28
+
+Route for vehicle 7:
+ 0 Drop off(0) -> 5 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 8.84km
+Passengers of the route: 30
+
+Route for vehicle 8:
+ 0 Drop off(0) -> 5 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 8.84km
+Passengers of the route: 30
+
+Route for vehicle 9:
+ 0 Drop off(0) -> 5 Drop off(8) -> 25 Drop off(5) -> 11 Drop off(14) -> 0 Drop off(0)
+Distance of the route: 20.22km
+Passengers of the route: 27
+
+Route for vehicle 10:
+ 0 Drop off(0) -> 3 Drop off(24) -> 6 Drop off(6) -> 0 Drop off(0)
+Distance of the route: 11.98km
+Passengers of the route: 30
+
+Route for vehicle 11:
+ 0 Drop off(0) -> 3 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 8.4km
+Passengers of the route: 30
+
+Route for vehicle 12:
+ 0 Drop off(0) -> 3 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 8.4km
+Passengers of the route: 30
+
+Route for vehicle 13:
+ 0 Drop off(0) -> 9 Drop off(15) -> 20 Drop off(6) -> 18 Drop off(6) -> 30 Drop off(3) -> 0 Drop off(0)
+Distance of the route: 22.94km
+Passengers of the route: 30
+
+Route for vehicle 14:
+ 0 Drop off(0) -> 2 Drop off(1) -> 7 Drop off(29) -> 0 Drop off(0)
+Distance of the route: 11.89km
+Passengers of the route: 30
+
+Route for vehicle 15:
+ 0 Drop off(0) -> 2 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 30
+
+Route for vehicle 16:
+ 0 Drop off(0) -> 2 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 30
+
+Route for vehicle 17:
+ 0 Drop off(0) -> 2 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 6.98km
+Passengers of the route: 30
+
+Route for vehicle 18:
+ 0 Drop off(0) -> 8 Drop off(24) -> 9 Drop off(6) -> 0 Drop off(0)
+Distance of the route: 8.87km
+Passengers of the route: 30
+
+Route for vehicle 19:
+ 0 Drop off(0) -> 13 Drop off(10) -> 16 Drop off(7) -> 23 Drop off(5) -> 22 Drop off(6) -> 4 Drop off(2) -> 0 Drop off(0)
+Distance of the route: 20.93km
+Passengers of the route: 30
+
+Route for vehicle 20:
+ 0 Drop off(0) -> 4 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 3.8km
+Passengers of the route: 30
+
+Route for vehicle 21:
+ 0 Drop off(0) -> 1 Drop off(10) -> 4 Drop off(20) -> 0 Drop off(0)
+Distance of the route: 5.7km
+Passengers of the route: 30
+
+Route for vehicle 22:
+ 0 Drop off(0) -> 1 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 30
+
+Route for vehicle 23:
+ 0 Drop off(0) -> 1 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 30
+
+Route for vehicle 24:
+ 0 Drop off(0) -> 1 Drop off(30) -> 0 Drop off(0)
+Distance of the route: 2.64km
+Passengers of the route: 30
+
+Total distance of all routes: 316.09km
+Total passengers of all routes: 738
+
+Solver status:  1
+
+Total fares: 7386; Total cost: 6068; Net profit: 1317.
